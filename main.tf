@@ -16,6 +16,8 @@ resource "azurerm_storage_account" "modulestoragev2" {
     ip_rules                   = var.ip_rules
     virtual_network_subnet_ids = [data.azurerm_subnet.subnet_selected.id]
   }
+  
+  tags = var.tags
 }
 
 resource "azurerm_storage_container" "module-hdinsight" {
@@ -23,6 +25,8 @@ resource "azurerm_storage_container" "module-hdinsight" {
   resource_group_name   = data.azurerm_resource_group.tamr_rg.name
   storage_account_name  = azurerm_storage_account.modulestoragev2.name
   container_access_type = "private"
+  
+  tags = var.tags
 }
 
 #
@@ -84,4 +88,6 @@ resource "azurerm_hdinsight_hbase_cluster" "module-hdinsight" {
       "gateway" # so password can be removed after creation
     ]
   }
+  
+  tags = var.tags
 }

@@ -23,27 +23,28 @@ This modules creates:
 
 # Variables 
 ## Inputs
-* `resource_group_name`: Name of resource group
-* `location`: Location
-* `cluster_name`: Name of HD-Insights HBase cluster
-* `storage_container_name`: Name of HD-Insights HBase cluster storage container
-* `ip_rules`: Array of IPs explicitly allowed to access UI
-* `subnet_id`: Subnet in which to deploy HD-Insights HBase resources
-* `vnet_id`: Virtual network in which to deploy HBase resources
-* `existing_network_resource_group`: Resource group which owns the VNet
-* `worker_count`: Desired number of worker nodes
+* `resource_group_name`: (required) Name of resource group
+* `location`: (required) Location
+* `cluster_name`: (required) Name of HD-Insights HBase cluster
+* `storage_container_name`: (required) Name of HD-Insights HBase cluster storage container
+* `ip_rules`: (required) Array of IPs explicitly allowed to access UI
+* `subnet_id`: (required) Subnet in which to deploy HD-Insights HBase resources
+* `vnet_id`: (required) Virtual network in which to deploy HBase resources
+* `existing_network_resource_group`: (required) Resource group which owns the VNet
+* `worker_count`: (required) Desired number of worker nodes
 * `storage_account_kind`: (optional) Account kind
 * `storage_account_tier`: (optional) Account tier
 * `storage_account_replication_type`: (optional) Account replication type
 * `username`: (optional) Username
-* `ssh_key`: SSH key
+* `ssh_key`: (required) SSH key
 * `head_node_vm_size`: (optional) Head node vm size
 * `worker_node_vm_size`: (optional) Worker nodes vm size
 * `zk_node_vm_size`: (optional) Zookeeper nodes vm size
 * `gateway_username`: (optional) Gateway username
-* `gateway_password`: Gateway password
-* `hbase_storage_name`: Name of HBase storage account
+* `gateway_password`: (required) Gateway password
+* `hbase_storage_name`: (required) Name of HBase storage account
 * `enable_advanced_threat_protection`: (optional) Enable advanced threat protection
+* `tags`: (optional) Map of tags to attach to HBase cluster, storage account, storage container
 
 ## Outputs
 * `storage_account_id`: ID of the Storage Account
