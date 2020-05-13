@@ -35,7 +35,7 @@ resource "azurerm_hdinsight_hbase_cluster" "module-hdinsight" {
   resource_group_name = data.azurerm_resource_group.tamr_rg.name
   location            = var.location
   # this specific so tf plan comes back unchanged
-  cluster_version     = "3.6.1000.67"
+  cluster_version     = var.hdinsights_cluster_version
   tier                = "Standard"
 
   component_version {

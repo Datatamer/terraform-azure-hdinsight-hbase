@@ -44,6 +44,7 @@ This modules creates:
 * `gateway_password`: (required) Gateway password
 * `hbase_storage_name`: (required) Name of HBase storage account
 * `enable_advanced_threat_protection`: (optional) Enable advanced threat protection
+* `hdinsights_cluster_version`: (optional) Version for HDInsights cluster
 * `tags`: (optional) Map of tags to attach to HBase cluster, storage account, storage container
 
 ## Outputs

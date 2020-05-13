@@ -126,6 +126,12 @@ variable "enable_advanced_threat_protection" {
     default = false
 }
 
+variable "hdinsights_cluster_version" {
+    description = "Version for HDInsights cluster"
+    type = string
+    default = "3.6"
+}
+
 variable "tags" {
     type = map(string)
     description = "Map of tags to attach to HBase cluster and storage account"
