@@ -25,8 +25,6 @@ resource "azurerm_storage_container" "module-hdinsight" {
   resource_group_name   = data.azurerm_resource_group.tamr_rg.name
   storage_account_name  = azurerm_storage_account.modulestoragev2.name
   container_access_type = "private"
-  
-  tags = var.tags
 }
 
 #

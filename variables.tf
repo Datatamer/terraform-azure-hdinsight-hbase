@@ -128,6 +128,6 @@ variable "enable_advanced_threat_protection" {
 
 variable "tags" {
     type = map(string)
-    description = "Map of tags to attach to HBase cluster, storage account, storage container"
+    description = "Map of tags to attach to HBase cluster and storage account"
     default = {}
 }
