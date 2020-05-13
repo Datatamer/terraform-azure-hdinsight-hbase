@@ -101,7 +101,7 @@ variable "worker_node_vm_size" {
 variable "zk_node_vm_size" {
     description = "Zookeeper nodes vm size"
     type = string
-    default = "Standard_D3_V2"
+    default = "Standard_A4_v2"
 }
 
 variable "gateway_username" {
