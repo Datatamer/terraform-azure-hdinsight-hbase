@@ -10,6 +10,7 @@ resource "azurerm_storage_account" "modulestoragev2" {
   account_replication_type = var.storage_account_replication_type
 
   enable_advanced_threat_protection = var.enable_advanced_threat_protection
+  enable_https_traffic_only = true
 
   network_rules {
     default_action             = "Deny"

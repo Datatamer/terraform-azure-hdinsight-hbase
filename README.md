@@ -8,7 +8,7 @@ TO BE UPDATED
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-template-repo?ref=0.1.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.1"
 }
 ```
 ## Minimal
