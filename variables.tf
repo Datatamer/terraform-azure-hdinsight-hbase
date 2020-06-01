@@ -9,6 +9,7 @@ data "azurerm_resource_group" "tamr_rg" {
 
 variable "location" {
     type = string
+    description = "Azure region where the HD-Insights HBase cluster is to be deployed"
 }
 
 variable "cluster_name" {
