@@ -19,7 +19,7 @@ module "minimal" {
   storage_container_name = "example-storage-container-name"
   subnet_id = "example-subnet-id"
   vnet_id = "example-vnet-id"
-  worker_count = "example-worker-count"
+  worker_count = 1
 }
 ```
 

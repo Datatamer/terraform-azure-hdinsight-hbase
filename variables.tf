@@ -9,16 +9,16 @@ data "azurerm_resource_group" "tamr_rg" {
 
 variable "location" {
     type = string
-    description = "Azure region where the HD-Insights HBase cluster is to be deployed"
+    description = "Azure region where the HDInsight HBase cluster is to be deployed"
 }
 
 variable "cluster_name" {
-    description = "Name of HD-Insights HBase cluster"
+    description = "Name of HDInsight HBase cluster"
     type = string
 }
 
 variable "storage_container_name" {
-    description = "Name of HD-Insights HBase cluster storage container"
+    description = "Name of HDInsight HBase cluster storage container"
     type = string
 }
 
@@ -28,7 +28,7 @@ variable "ip_rules" {
 }
 
 variable "subnet_id" {
-    description = "Subnet in which to deploy HD-Insights HBase resources"
+    description = "Subnet in which to deploy HDInsight HBase resources"
     type = string
 }
 
@@ -128,7 +128,7 @@ variable "enable_advanced_threat_protection" {
 }
 
 variable "hdinsights_cluster_version" {
-    description = "Version for HDInsights cluster"
+    description = "Version for HDInsight cluster"
     type = string
     default = "3.6"
 }
