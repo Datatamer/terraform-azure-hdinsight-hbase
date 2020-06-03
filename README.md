@@ -3,6 +3,8 @@
 This module creates an HDInsights HBase cluster for Tamr in Azure.
 
 # Examples
+Refer the `/examples` directory for a complete working example.
+
 ## Basic
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
