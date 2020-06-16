@@ -3,9 +3,9 @@ variable "resource_group_name" {
     type = string
 }
 
-data "azurerm_resource_group" "tamr_rg" {
-    name = var.resource_group_name
-}
+//data "azurerm_resource_group" "tamr_rg" {
+//    name = var.resource_group_name
+//}
 
 variable "location" {
     type = string
@@ -82,8 +82,8 @@ variable "username" {
     default = "sshuser"
 }
 
-variable "ssh_key" {
-    description = "SSH key"
+variable "path_to_ssh_key" {
+    description = "Path to the SSH key"
     type = string
 }
 
@@ -161,4 +161,16 @@ variable "storage_container_access_type" {
     type = string
     description = "Access type of the storage container. Options blob, container or private"
     default = "private"
+}
+
+variable "cluster_tier" {
+    type = string
+    description = "The cluster tier. Optionas are Standard or Premium"
+    default = "Standard"
+}
+
+variable "hbase_version" {
+    type = string
+    description = "Version of hbase"
+    default = "1.1"
 }
