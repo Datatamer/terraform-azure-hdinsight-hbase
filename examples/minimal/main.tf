@@ -1,26 +1,35 @@
-resource "azurerm_resource_group" "databricks-rg" {
-  name = "tamrDatabricksResourceGroup"
+resource "azurerm_resource_group" "hdinsight-rg" {
+  name = "example-rg"
   location = "East US"
 }
 
-resource "azurerm_virtual_network" "databricks-vnet" {
-  name = "tamrDatabricksVirtualNetwork"
-
-  location            = azurerm_resource_group.databricks-rg.location
-  resource_group_name = azurerm_resource_group.databricks-rg.name
-
-  address_space = ["1.2.3.0/25"]
+resource "azurerm_virtual_network" "hdinsight-vnet" {
+  name                = "example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.hdinsight-rg.location
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
 }
 
-module "databricks" {
-  source = "git@github.com:Datatamer/terraform-azure-databricks.git?ref=0.1.2"
-  name = "tamr-databricks"
-  resource_group_name = azurerm_resource_group.databricks-rg.name
-  location = azurerm_resource_group.databricks-rg.location
-  virtual_network_name = azurerm_virtual_network.databricks-vnet.name
-  virtual_network_rg_name = azurerm_resource_group.databricks-rg.name
+resource "azurerm_subnet" "hdinsight-subnet" {
+  name                 = "examplesubnet"
+  resource_group_name  = azurerm_resource_group.hdinsight-rg.name
+  virtual_network_name = azurerm_virtual_network.hdinsight-vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+  service_endpoints = ["Microsoft.Storage"]
+}
 
-  private_subnet_address_prefix = "1.2.3.0/26"
-  public_subnet_address_prefix = "1.2.3.64/26"
-
+module "hdinsight" {
+  source = "../../"
+  cluster_name = "example-cluster"
+  existing_network_resource_group = azurerm_resource_group.hdinsight-rg.name
+  gateway_password = "Password123"
+  hbase_storage_name = "examplestorage"
+  ip_rules = ["1.2.3.4"]
+  location = azurerm_resource_group.hdinsight-rg.location
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
+  path_to_ssh_key = "~/.ssh/key.pub"
+  storage_container_name = "examplestoragecontainer"
+  subnet_name = azurerm_subnet.hdinsight-subnet.name
+  vnet_name = azurerm_virtual_network.hdinsight-vnet.name
+  worker_count = "1"
 }

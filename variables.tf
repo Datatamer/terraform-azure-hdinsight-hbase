@@ -3,9 +3,9 @@ variable "resource_group_name" {
     type = string
 }
 
-data "azurerm_resource_group" "tamr_rg" {
-    name = var.resource_group_name
-}
+//data "azurerm_resource_group" "tamr_rg" {
+//    name = var.resource_group_name
+//}
 
 variable "location" {
     type = string
@@ -27,25 +27,25 @@ variable "ip_rules" {
     type = list(string)
 }
 
-variable "subnet_id" {
-    description = "Subnet in which to deploy HDInsight HBase resources"
+variable "subnet_name" {
+    description = "Name of the subnet in which to deploy HDInsight HBase resources"
     type = string
 }
 
-variable "vnet_id" {
-    description = "Virtual network in which to deploy HBase resources"
+variable "vnet_name" {
+    description = "Name of the virtual network in which to deploy HBase resources"
     type = string
 }
 
 data "azurerm_virtual_network" "selected" {
     resource_group_name = var.existing_network_resource_group
-    name = var.vnet_id
+    name = var.vnet_name
 }
 
 data "azurerm_subnet" "subnet_selected" {
     resource_group_name = var.existing_network_resource_group
-    virtual_network_name = var.vnet_id
-    name = var.subnet_id
+    virtual_network_name = var.vnet_name
+    name = var.subnet_name
 }
 
 variable "existing_network_resource_group" {
@@ -82,8 +82,8 @@ variable "username" {
     default = "sshuser"
 }
 
-variable "ssh_key" {
-    description = "SSH key"
+variable "path_to_ssh_key" {
+    description = "Path to the SSH key"
     type = string
 }
 
@@ -137,4 +137,40 @@ variable "tags" {
     type = map(string)
     description = "Map of tags to attach to HBase cluster and storage account"
     default = {}
+}
+
+variable "enable_https_traffic_only" {
+    type = bool
+    description = "Force https traffic only boolean flag"
+    default = true
+}
+
+variable "network_rules_default_action" {
+    type = string
+    description = "Default action for the network rules. Options are Allow or Deny"
+    default = "Deny"
+}
+
+variable "storage_account_access_tier" {
+    type = string
+    description = "Access tier of the storage account. Options are Hot and Cool"
+    default = "Hot"
+}
+
+variable "storage_container_access_type" {
+    type = string
+    description = "Access type of the storage container. Options blob, container or private"
+    default = "private"
+}
+
+variable "cluster_tier" {
+    type = string
+    description = "The cluster tier. Optionas are Standard or Premium"
+    default = "Standard"
+}
+
+variable "hbase_version" {
+    type = string
+    description = "Version of hbase"
+    default = "1.1"
 }
