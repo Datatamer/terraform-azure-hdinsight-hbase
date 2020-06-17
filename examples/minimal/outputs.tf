@@ -1,8 +1,14 @@
-//output "null_resource_id" {
-//  value       = "${module.minimal.null_resource_id}"
-//  description = "An arbitrary value that changes each time the resource is replaced."
-//}
-//output "example_value" {
-//  value       = "${module.minimal.example_value}"
-//  description = "Example variable."
-//}
+output "storage_account_id" {
+  value = module.hdinsight.storage_account_id
+  description = "The ID of the Storage Account"
+}
+
+output "storage_container_id" {
+  value = module.hdinsight.storage_container_id
+  description = "The ID of the Storage Container"
+}
+
+output "hbase_cluster_id" {
+  value = module.hdinsight.hbase_cluster_id
+  description = "The ID of the HDInsight HBase cluster"
+}
