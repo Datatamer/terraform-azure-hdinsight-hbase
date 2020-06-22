@@ -31,36 +31,63 @@ This modules creates:
 * 1 storage container
 * 1 storage account
 
-# Variables 
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+| azurerm | =2.11.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| azurerm | =2.11.0 |
+
 ## Inputs
-* `resource_group_name`: (required) Name of resource group
-* `location`: (required) Location
-* `cluster_name`: (required) Name of HD-Insights HBase cluster
-* `storage_container_name`: (required) Name of HD-Insights HBase cluster storage container
-* `ip_rules`: (required) Array of IPs explicitly allowed to access UI
-* `subnet_id`: (required) Subnet in which to deploy HD-Insights HBase resources
-* `vnet_id`: (required) Virtual network in which to deploy HBase resources
-* `existing_network_resource_group`: (required) Resource group which owns the VNet
-* `worker_count`: (required) Desired number of worker nodes
-* `storage_account_kind`: (optional) Account kind
-* `storage_account_tier`: (optional) Account tier
-* `storage_account_replication_type`: (optional) Account replication type
-* `username`: (optional) Username
-* `ssh_key`: (required) SSH key
-* `head_node_vm_size`: (optional) Head node vm size
-* `worker_node_vm_size`: (optional) Worker nodes vm size
-* `zk_node_vm_size`: (optional) Zookeeper nodes vm size
-* `gateway_username`: (optional) Gateway username
-* `gateway_password`: (required) Gateway password
-* `hbase_storage_name`: (required) Name of HBase storage account
-* `enable_advanced_threat_protection`: (optional) Enable advanced threat protection
-* `hdinsights_cluster_version`: (optional) Version for HDInsights cluster
-* `tags`: (optional) Map of tags to attach to HBase cluster, storage account, storage container
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| cluster\_name | Name of HDInsight HBase cluster | `string` | n/a | yes |
+| existing\_network\_resource\_group | Resource group which owns the VNet | `string` | n/a | yes |
+| gateway\_password | Gateway password | `string` | n/a | yes |
+| hbase\_storage\_name | Name of HBase storage account | `string` | n/a | yes |
+| ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | n/a | yes |
+| location | Azure region where the HDInsight HBase cluster is to be deployed | `string` | n/a | yes |
+| path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
+| resource\_group\_name | Name of resource group | `string` | n/a | yes |
+| storage\_container\_name | Name of HDInsight HBase cluster storage container | `string` | n/a | yes |
+| subnet\_name | Name of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
+| vnet\_name | Name of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
+| worker\_count | Desired number of worker nodes | `number` | n/a | yes |
+| cluster\_tier | The cluster tier. Optionas are Standard or Premium | `string` | `"Standard"` | no |
+| enable\_advanced\_threat\_protection | Enable advanced threat protection | `bool` | `false` | no |
+| enable\_https\_traffic\_only | Force https traffic only boolean flag | `bool` | `true` | no |
+| gateway\_username | Gateway username | `string` | `"admin"` | no |
+| hbase\_version | Version of hbase | `string` | `"1.1"` | no |
+| hdinsights\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
+| head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
+| network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
+| storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
+| storage\_account\_kind | Account kind | `string` | `"StorageV2"` | no |
+| storage\_account\_replication\_type | Account replication type | `string` | `"ZRS"` | no |
+| storage\_account\_tier | Account tier | `string` | `"Standard"` | no |
+| storage\_container\_access\_type | Access type of the storage container. Options blob, container or private | `string` | `"private"` | no |
+| tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
+| username | Username | `string` | `"sshuser"` | no |
+| worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D3_V2"` | no |
+| zk\_node\_vm\_size | Zookeeper nodes vm size | `string` | `"Standard_A4_v2"` | no |
 
 ## Outputs
-* `storage_account_id`: ID of the Storage Account
-* `storage_container_id`: ID of the Storage Container
-* `hbase_cluster_id`: ID of the HDInsight HBase cluster
+
+| Name | Description |
+|------|-------------|
+| hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
+| storage\_account\_id | The ID of the Storage Account |
+| storage\_container\_id | The ID of the Storage Container |
+
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
 # References
 This repo is based on:
