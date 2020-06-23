@@ -1,5 +1,5 @@
 module "hdinsight_hbase_storage" {
-  source = "./modules/azure-storage"
+  source = "./modules/hdinsight-storage"
   hbase_storage_account_name = var.hbase_storage_name
   resource_group_name = var.resource_group_name
   location = var.location
