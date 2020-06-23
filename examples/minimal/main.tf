@@ -10,12 +10,12 @@ resource "azurerm_virtual_network" "hdinsight-vnet" {
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 }
 
-resource "azurerm_subnet" "hdinsight-subnet" {
-  name                 = "examplesubnet"
-  resource_group_name  = azurerm_resource_group.hdinsight-rg.name
-  virtual_network_name = azurerm_virtual_network.hdinsight-vnet.name
-  address_prefixes     = ["10.0.1.0/24"]
-  service_endpoints = ["Microsoft.Storage"]
+module "hdinsight_networking" {
+  source = "../../modules/hdinsight-networking"
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
+  vnet_name = azurerm_virtual_network.hdinsight-vnet.name
+  subnet_name = "test-subnet"
+  address_prefixes = ["10.0.1.0/24"]
 }
 
 module "hdinsight" {
@@ -29,7 +29,7 @@ module "hdinsight" {
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
   path_to_ssh_key = "~/.ssh/key.pub"
   storage_container_name = "examplestoragecontainer"
-  subnet_name = azurerm_subnet.hdinsight-subnet.name
+  subnet_name = module.hdinsight_networking.subnet_name
   vnet_name = azurerm_virtual_network.hdinsight-vnet.name
   worker_count = "1"
 }

@@ -6,7 +6,7 @@ This module creates the required storage account and container for Azure HDInsig
 
 ```
 module "hdinsight_hbase_storage" {
-  source = "./modules/azure-storage"
+  source = "./modules/hdinsight-storage"
   hbase_storage_account_name = "examplestorageaccount"
   resource_group_name = "example-resource-group"
   location = "example-Azure-location"
