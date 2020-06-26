@@ -159,3 +159,25 @@ variable "hbase_version" {
   description = "Version of hbase"
   default     = "1.1"
 }
+
+variable "address_prefixes" {
+    type = list(string)
+    description = "List of cidr blocks for address prefixes"
+    default = []
+}
+
+variable "additional_service_endpoints" {
+    type = list(string)
+    description = "List of additional service endpoints"
+    default = ["Microsoft.Storage"]
+}
+
+variable "public_nsg_name" {
+    type = string
+    description = "Name of the public network security group"
+}
+
+variable "private_nsg_name" {
+    type = string
+    description = "Name of the private network security group"
+}

@@ -1,5 +1,24 @@
+#
+# Hbase network security groups
+#
+module "hdinsight_hbase_nsg" {
+  source               = "./modules/hdinsight-security-groups"
+  module_depends_on    = [var.module_depends_on]
+  location             = var.location
+  nsg_name             = var.nsg_name
+  resource_group_name  = var.resource_group_name
+  subnet_id            = var.subnet_id
+  tags                 = var.tags
+  az_dns_service_used  = var.az_dns_service_used
+  ssh_address_prefixes = var.ssh_address_prefixes
+}
+
+#
+# Hbase storage
+#
 module "hdinsight_hbase_storage" {
   source                           = "./modules/hdinsight-storage"
+  module_depends_on                = [var.module_depends_on]
   hbase_storage_account_name       = var.hbase_storage_name
   resource_group_name              = var.resource_group_name
   location                         = var.location
@@ -19,62 +38,27 @@ module "hdinsight_hbase_storage" {
 #
 # Hbase cluster
 #
-resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
-  name                = var.cluster_name
-  resource_group_name = var.resource_group_name
-  location            = var.location
-  # this specific so tf plan comes back unchanged
-  cluster_version = var.hdinsights_cluster_version
-  tier            = var.cluster_tier
-
-  component_version {
-    hbase = var.hbase_version
-  }
-
-  gateway {
-    enabled  = true
-    username = var.gateway_username
-    password = var.gateway_password
-  }
-
-  storage_account {
-    storage_container_id = module.hdinsight_hbase_storage.storage_container_id
-    storage_account_key  = module.hdinsight_hbase_storage.storage_account_primary_access_key
-    is_default           = true
-  }
-
-  roles {
-    head_node {
-      vm_size            = var.head_node_vm_size
-      username           = var.username
-      ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = var.subnet_id
-      virtual_network_id = var.vnet_id
-    }
-
-    worker_node {
-      vm_size               = var.worker_node_vm_size
-      username              = var.username
-      ssh_keys              = [file(var.path_to_ssh_key)]
-      subnet_id             = var.subnet_id
-      virtual_network_id    = var.vnet_id
-      target_instance_count = var.worker_count
-    }
-
-    zookeeper_node {
-      vm_size            = var.zk_node_vm_size
-      username           = var.username
-      ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = var.subnet_id
-      virtual_network_id = var.vnet_id
-    }
-  }
-  lifecycle {
-    ignore_changes = [
-      tier,   # otherwise doesn't ignore case
-      gateway # so password can be removed after creation
-    ]
-  }
-
-  tags = var.tags
+module hdinsight_hbase_cluster {
+  source                             = "./modules/hdinsight-hbase-cluster"
+  module_depends_on                  = [var.module_depends_on]
+  cluster_name                       = var.cluster_name
+  gateway_username                   = var.gateway_username
+  gateway_password                   = var.gateway_password
+  location                           = var.location
+  network_resource_group             = var.existing_network_resource_group
+  path_to_ssh_key                    = var.path_to_ssh_key
+  resource_group_name                = var.resource_group_name
+  storage_account_primary_access_key = module.hdinsight_hbase_storage.storage_account_primary_access_key
+  storage_container_id               = module.hdinsight_hbase_storage.storage_container_id
+  subnet_id                          = var.subnet_id
+  vnet_id                            = var.vnet_id
+  worker_count                       = var.worker_count
+  cluster_tier                       = var.cluster_tier
+  hbase_version                      = var.hbase_version
+  hdinsights_cluster_version         = var.hdinsights_cluster_version
+  head_node_vm_size                  = var.head_node_vm_size
+  username                           = var.username
+  worker_node_vm_size                = var.worker_node_vm_size
+  zk_node_vm_size                    = var.zk_node_vm_size
+  tags                               = var.tags
 }

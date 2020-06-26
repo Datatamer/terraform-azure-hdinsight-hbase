@@ -19,6 +19,8 @@
 | private\_nsg\_name | Name of the private network security group | `string` | n/a | yes |
 | public\_nsg\_name | Name of the public network security group | `string` | n/a | yes |
 | resource\_group | Name of the resource group for the network security group | `string` | n/a | yes |
+| subnet\_id | Id of the subnet | `string` | n/a | yes |
+| tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
 
 ## Outputs
 

@@ -56,11 +56,15 @@ This modules creates:
 | ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | n/a | yes |
 | location | Azure region where the HDInsight HBase cluster is to be deployed | `string` | n/a | yes |
 | path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
+| private\_nsg\_name | Name of the private network security group | `string` | n/a | yes |
+| public\_nsg\_name | Name of the public network security group | `string` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
 | storage\_container\_name | Name of HDInsight HBase cluster storage container | `string` | n/a | yes |
 | subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
 | vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
 | worker\_count | Desired number of worker nodes | `number` | n/a | yes |
+| additional\_service\_endpoints | List of additional service endpoints | `list(string)` | <pre>[<br>  "Microsoft.Storage"<br>]</pre> | no |
+| address\_prefixes | List of cidr blocks for address prefixes | `list(string)` | `[]` | no |
 | cluster\_tier | The cluster tier. Optionas are Standard or Premium | `string` | `"Standard"` | no |
 | enable\_advanced\_threat\_protection | Enable advanced threat protection | `bool` | `false` | no |
 | enable\_https\_traffic\_only | Force https traffic only boolean flag | `bool` | `true` | no |
