@@ -1,12 +1,12 @@
-variable "public_nsg_name" {
+variable "nsg_name" {
   type = string
-  description = "Name of the public network security group"
+  description = "Name of the network security group"
 }
 
-variable "private_nsg_name" {
-  type = string
-  description = "Name of the private network security group"
-}
+//variable "private_nsg_name" {
+//  type = string
+//  description = "Name of the private network security group"
+//}
 
 variable "location" {
   type = string

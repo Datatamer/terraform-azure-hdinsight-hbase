@@ -1,6 +1,6 @@
 //Public network security group
 resource "azurerm_network_security_group" "hdinsight_hbase_nsg" {
-  name = var.public_nsg_name
+  name = var.nsg_name
   location = var.location
   resource_group_name = var.resource_group
   tags = var.tags

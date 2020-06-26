@@ -53,11 +53,9 @@ This modules creates:
 | existing\_network\_resource\_group | Resource group which owns the VNet | `string` | n/a | yes |
 | gateway\_password | Gateway password | `string` | n/a | yes |
 | hbase\_storage\_name | Name of HBase storage account | `string` | n/a | yes |
-| ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | n/a | yes |
 | location | Azure region where the HDInsight HBase cluster is to be deployed | `string` | n/a | yes |
+| nsg\_name | Name of the network security group | `string` | n/a | yes |
 | path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
-| private\_nsg\_name | Name of the private network security group | `string` | n/a | yes |
-| public\_nsg\_name | Name of the public network security group | `string` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
 | storage\_container\_name | Name of HDInsight HBase cluster storage container | `string` | n/a | yes |
 | subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
@@ -72,6 +70,7 @@ This modules creates:
 | hbase\_version | Version of hbase | `string` | `"1.1"` | no |
 | hdinsights\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
+| ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | `[]` | no |
 | network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
 | storage\_account\_kind | Account kind | `string` | `"StorageV2"` | no |
