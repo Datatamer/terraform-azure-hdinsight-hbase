@@ -17,3 +17,9 @@ variable "resource_group" {
   type = string
   description = "Name of the resource group for the network security group"
 }
+
+variable "tags" {
+  type = map(string)
+  description = "Map of tags to attach to HBase cluster and storage account"
+  default = {}
+}

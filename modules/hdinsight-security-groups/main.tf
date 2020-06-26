@@ -3,6 +3,7 @@ resource "azurerm_network_security_group" "hdinsight_hbase_public_nsg" {
   name = var.public_nsg_name
   location = var.location
   resource_group_name = var.resource_group
+  tags = var.tags
 }
 
 //Private network security group
@@ -10,6 +11,7 @@ resource "azurerm_network_security_group" "hdinsight_hbase_private_nsg" {
   name = var.private_nsg_name
   location = var.location
   resource_group_name = var.resource_group
+  tags = var.tags
 }
 
 //Public ports - ssh
