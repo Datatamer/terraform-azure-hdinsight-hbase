@@ -20,7 +20,8 @@ variable "storage_container_name" {
 
 variable "ip_rules" {
   description = "Array of IPs explicitly allowed to access UI"
-  type        = list(string)
+  type = list(string)
+  default = []
 }
 
 variable "subnet_id" {
@@ -161,20 +162,20 @@ variable "hbase_version" {
 }
 
 variable "address_prefixes" {
-    type = list(string)
-    description = "List of cidr blocks for address prefixes"
-    default = []
+  type        = list(string)
+  description = "List of cidr blocks for address prefixes"
+  default     = []
 }
 
 variable "additional_service_endpoints" {
-    type = list(string)
-    description = "List of additional service endpoints"
-    default = ["Microsoft.Storage"]
+  type        = list(string)
+  description = "List of additional service endpoints"
+  default     = ["Microsoft.Storage"]
 }
 
 variable "nsg_name" {
-    type = string
-    description = "Name of the network security group"
+  type        = string
+  description = "Name of the network security group"
 }
 
 //variable "private_nsg_name" {

@@ -1,5 +1,5 @@
 //Public network security group
-resource "azurerm_network_security_group" "hdinsight_hbase_nsg" {
+resource "azurerm_network_security_group" "hdinsight-hbase-nsg" {
   name = var.nsg_name
   location = var.location
   resource_group_name = var.resource_group
@@ -16,8 +16,8 @@ resource "azurerm_network_security_group" "hdinsight_hbase_nsg" {
 //  tags = var.tags
 //}
 
-resource "azurerm_subnet_network_security_group_association" "nsg_subnet_connection" {
-  network_security_group_id = azurerm_network_security_group.hdinsight_hbase_nsg.id
+resource "azurerm_subnet_network_security_group_association" "nsg-subnet-connection" {
+  network_security_group_id = azurerm_network_security_group.hdinsight-hbase-nsg.id
   subnet_id = var.subnet_id
 }
 
@@ -27,13 +27,13 @@ resource "azurerm_network_security_rule" "public_rule_sshd_1" {
   description = "sshd connection to primary headnode and edgenode"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 100
   protocol = "Tcp"
   resource_group_name = var.resource_group
   source_port_range = "*"
   destination_port_range = "22"
-  source_address_prefixs = []
+  source_address_prefixes = []
   destination_address_prefix = "VirtualNetwork"
 }
 
@@ -42,13 +42,13 @@ resource "azurerm_network_security_rule" "public_rule_sshd_2" {
   description = "sshd connection to the secondary headnode"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 101
   protocol = "Tcp"
   resource_group_name = var.resource_group
   source_port_range = "*"
   destination_port_range = "23"
-  source_address_prefixs = []
+  source_address_prefixes = []
   destination_address_prefix = "VirtualNetwork"
 }
 
@@ -58,13 +58,13 @@ resource "azurerm_network_security_rule" "public_rule_https" {
   description = "https connections for Ambari UI, Ambari REST API, HCatalog REST API, Hive ODBC, ApacheHive JDBC, Hbase REST API, Spark REST API, Spark Thrift Server, Storm web UI, Kafka REST API"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 103
   protocol = "Tcp"
   resource_group_name = var.resource_group
   source_port_range = "*"
   destination_port_range = "443"
-  source_address_prefixs = []
+  source_address_prefixes = []
   destination_address_prefix = "VirtualNetwork"
 
 }
@@ -75,7 +75,7 @@ resource "azurerm_network_security_rule" "private_rule_8080" {
   description = "http connections to Ambari web UI and Ambari REST API"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 100
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -91,7 +91,7 @@ resource "azurerm_network_security_rule" "private_rule_30070" {
   description = "NameNode web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 101
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -106,7 +106,7 @@ resource "azurerm_network_security_rule" "private_rule_8020" {
   description = "NameNode metadata service"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 102
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -121,7 +121,7 @@ resource "azurerm_network_security_rule" "private_rule_30075" {
   description = "DataNode WebUI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 103
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -136,7 +136,7 @@ resource "azurerm_network_security_rule" "private_rule_30010" {
   description = "DataNode data transfer"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 104
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -151,7 +151,7 @@ resource "azurerm_network_security_rule" "private_rule_30020" {
   description = "DataNode Metadata operations"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 105
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -166,7 +166,7 @@ resource "azurerm_network_security_rule" "private_rule_50090" {
   description = "Secondary NameNode - checkpoint for metadata"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 106
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -181,7 +181,7 @@ resource "azurerm_network_security_rule" "private_rule_50090" {
   description = "Secondary NameNode - checkpoint for metadata"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 106
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -197,7 +197,7 @@ resource "azurerm_network_security_rule" "private_rule_8088" {
   description = "Resource manager web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 107
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -212,7 +212,7 @@ resource "azurerm_network_security_rule" "private_rule_8090" {
   description = "Resource manager web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 108
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -227,7 +227,7 @@ resource "azurerm_network_security_rule" "private_rule_8141" {
   description = "Resource manager admin interface"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 109
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -242,7 +242,7 @@ resource "azurerm_network_security_rule" "private_rule_8030" {
   description = "Resource manager scheduler"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 110
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -257,7 +257,7 @@ resource "azurerm_network_security_rule" "private_rule_8050" {
   description = "Resource manager application interface"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 111
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -272,7 +272,7 @@ resource "azurerm_network_security_rule" "private_rule_30050" {
   description = "NodeManager"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 112
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -287,7 +287,7 @@ resource "azurerm_network_security_rule" "private_rule_30060" {
   description = "NodeManager web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 113
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -302,7 +302,7 @@ resource "azurerm_network_security_rule" "private_rule_10200" {
   description = "Timeline address"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 114
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -317,7 +317,7 @@ resource "azurerm_network_security_rule" "private_rule_8188" {
   description = "Timeline web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 115
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -333,7 +333,7 @@ resource "azurerm_network_security_rule" "private_rule_10001" {
   description = "Hive Server 2"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 116
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -348,7 +348,7 @@ resource "azurerm_network_security_rule" "private_rule_9083" {
   description = "Hive Metastore"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 117
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -364,7 +364,7 @@ resource "azurerm_network_security_rule" "private_rule_30111" {
   description = "WebHCat server"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 118
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -380,7 +380,7 @@ resource "azurerm_network_security_rule" "private_rule_19888" {
   description = "Job History Web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 119
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -395,7 +395,7 @@ resource "azurerm_network_security_rule" "private_rule_10020" {
   description = "Job History server"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 120
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -410,7 +410,7 @@ resource "azurerm_network_security_rule" "private_rule_13562" {
   description = "Shuffle Handler"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 121
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -426,7 +426,7 @@ resource "azurerm_network_security_rule" "private_rule_11000" {
   description = "Oozie service URL"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 122
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -441,7 +441,7 @@ resource "azurerm_network_security_rule" "private_rule_11001" {
   description = "Oozie admin port"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 123
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -457,7 +457,7 @@ resource "azurerm_network_security_rule" "private_rule_6188" {
   description = "TimeLine service web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 124
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -472,7 +472,7 @@ resource "azurerm_network_security_rule" "private_rule_30200" {
   description = "TimeLine service web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 125
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -488,7 +488,7 @@ resource "azurerm_network_security_rule" "private_rule_16000" {
   description = "HMaster"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 126
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -503,7 +503,7 @@ resource "azurerm_network_security_rule" "private_rule_16010" {
   description = "HMaster info Web UI"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 127
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -518,7 +518,7 @@ resource "azurerm_network_security_rule" "private_rule_16020" {
   description = "Region server"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 128
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -533,7 +533,7 @@ resource "azurerm_network_security_rule" "private_rule_2181" {
   description = "Zookeeper connection"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 129
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -549,7 +549,7 @@ resource "azurerm_network_security_rule" "private_rule_9092" {
   description = "Broker for client communication"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 130
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -564,7 +564,7 @@ resource "azurerm_network_security_rule" "private_rule_9400" {
   description = "Kafka REST Proxy"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 131
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -580,7 +580,7 @@ resource "azurerm_network_security_rule" "private_rule_10002" {
   description = "Spark thrift servers"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 132
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -595,7 +595,7 @@ resource "azurerm_network_security_rule" "private_rule_8998" {
   description = "Livy server"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 133
   protocol = "Tcp"
   resource_group_name = var.resource_group
@@ -610,7 +610,7 @@ resource "azurerm_network_security_rule" "private_rule_8001" {
   description = "Jupyter notebook"
   access = "Allow"
   direction = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight_hbase_nsg.name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 134
   protocol = "Tcp"
   resource_group_name = var.resource_group

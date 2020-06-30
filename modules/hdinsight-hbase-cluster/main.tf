@@ -2,7 +2,6 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
   name                = var.cluster_name
   resource_group_name = var.resource_group_name
   location            = var.location
-  # this specific so tf plan comes back unchanged
   cluster_version     = var.hdinsights_cluster_version
   tier                = var.cluster_tier
 
