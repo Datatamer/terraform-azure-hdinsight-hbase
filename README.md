@@ -9,7 +9,7 @@ Refer the `/examples` directory for a complete working example.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.2"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.3"
   cluster_name = "example-cluster-name"
   existing_network_resource_group = "example-resource-group"
   gateway_password = "example-gateway-password"
