@@ -71,8 +71,8 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
   }
   lifecycle {
     ignore_changes = [
-      "tier",   # otherwise doesn't ignore case
-      "gateway" # so password can be removed after creation
+      tier,   # otherwise doesn't ignore case
+      gateway # so password can be removed after creation
     ]
   }
 
