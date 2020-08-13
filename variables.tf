@@ -1,11 +1,18 @@
+data "azurerm_virtual_network" "vn_id" {
+  resource_group_name = var.existing_network_resource_group
+  name                = var.vnet_name
+}
+
+data "azurerm_subnet" "subnet_id" {
+  resource_group_name  = var.existing_network_resource_group
+  virtual_network_name = var.vnet_name
+  name                 = var.subnet_name
+}
+
 variable "resource_group_name" {
   description = "Name of resource group"
   type        = string
 }
-
-//data "azurerm_resource_group" "tamr_rg" {
-//    name = var.resource_group_name
-//}
 
 variable "location" {
   type        = string
@@ -35,17 +42,6 @@ variable "subnet_name" {
 variable "vnet_name" {
   description = "Name of the virtual network in which to deploy HBase resources"
   type        = string
-}
-
-data "azurerm_virtual_network" "selected" {
-  resource_group_name = var.existing_network_resource_group
-  name                = var.vnet_name
-}
-
-data "azurerm_subnet" "subnet_selected" {
-  resource_group_name  = var.existing_network_resource_group
-  virtual_network_name = var.vnet_name
-  name                 = var.subnet_name
 }
 
 variable "existing_network_resource_group" {
