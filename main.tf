@@ -49,7 +49,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       username           = var.username
       ssh_keys           = [file(var.path_to_ssh_key)]
       subnet_id          = var.subnet_id
-      virtual_network_id = var.virtual_network_id
+      virtual_network_id = var.vnet_id
     }
 
     worker_node {
@@ -57,7 +57,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       username              = var.username
       ssh_keys              = [file(var.path_to_ssh_key)]
       subnet_id             = var.subnet_id
-      virtual_network_id    = var.virtual_network_id
+      virtual_network_id    = var.vnet_id
       target_instance_count = var.worker_count
     }
 
@@ -66,7 +66,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       username           = var.username
       ssh_keys           = [file(var.path_to_ssh_key)]
       subnet_id          = var.subnet_id
-      virtual_network_id = var.virtual_network_id
+      virtual_network_id = var.vnet_id
     }
   }
   lifecycle {

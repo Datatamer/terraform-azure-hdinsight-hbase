@@ -1,14 +1,3 @@
-data "azurerm_virtual_network" "vn_id" {
-  resource_group_name = var.existing_network_resource_group
-  name                = var.vnet_name
-}
-
-data "azurerm_subnet" "subnet_id" {
-  resource_group_name  = var.existing_network_resource_group
-  virtual_network_name = var.vnet_name
-  name                 = var.subnet_name
-}
-
 variable "resource_group_name" {
   description = "Name of resource group"
   type        = string
@@ -39,8 +28,18 @@ variable "subnet_name" {
   type        = string
 }
 
+variable "subnet_id" {
+  description = "ID of the subnet in which to deploy HDInsight HBase resources"
+  type        = string
+}
+
 variable "vnet_name" {
   description = "Name of the virtual network in which to deploy HBase resources"
+  type        = string
+}
+
+variable "vnet_id" {
+  description = "ID of the virtual network in which to deploy HBase resources"
   type        = string
 }
 
