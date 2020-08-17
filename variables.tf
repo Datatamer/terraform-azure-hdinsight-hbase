@@ -20,8 +20,8 @@ variable "storage_container_name" {
 
 variable "ip_rules" {
   description = "Array of IPs explicitly allowed to access UI"
-  type = list(string)
-  default = []
+  type        = list(string)
+  default     = []
 }
 
 variable "subnet_id" {
