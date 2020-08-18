@@ -2,7 +2,7 @@
 resource "azurerm_network_security_group" "hdinsight-hbase-nsg" {
   name = var.nsg_name
   location = var.location
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   tags = var.tags
 }
 
@@ -21,6 +21,64 @@ resource "azurerm_subnet_network_security_group_association" "nsg-subnet-connect
   subnet_id = var.subnet_id
 }
 
+# Create network security group rules to secure HDInsight management traffic
+resource "azurerm_network_security_rule" "nsg_rule_allow_hdi_mgmt_traffic" {
+  name                        = "allow_hdi_mgmt_traffic"
+  priority                    = 300
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  source_address_prefixes     = var.source_address_mgmt_prefixes
+  destination_port_range      = "443"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
+}
+
+//If Azure-provided DNS service is used, the following network security rule should be run
+resource "azurerm_network_security_rule" "nsg_rule_allow_azure_resolver_traffic" {
+  name                        = "allow_azure_resolver_traffic"
+  priority                    = 301
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  source_address_prefix       = var.source_address_az_dns_service
+  destination_port_range      = "443"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
+}
+
+resource "azurerm_network_security_rule" "nsg_rule_allow_azure_port_53_traffic" {
+  name                        = "allow_azure_resolver_traffic"
+  priority                    = 303
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  source_address_prefix       = var.source_address_az_dns_service
+  destination_port_range      = "53"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
+}
+
+resource "azurerm_network_security_rule" "nsg_rule_allow_hdi_mgmt_traffic_regional" {
+  name                        = "allow_hdi_mgmt_traffic_regional"
+  priority                    = 302
+  direction                   = "Inbound"
+  access                      = "Allow"
+  protocol                    = "*"
+  source_port_range           = "*"
+  source_address_prefixes     = var.source_address_prefixes_mgmt_region_specific
+  destination_port_range      = "443"
+  destination_address_prefix  = "VirtualNetwork"
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
+}
+
 //Public ports - ssh
 resource "azurerm_network_security_rule" "public_rule_sshd_1" {
   name = "Public sshd rule 1"
@@ -30,7 +88,7 @@ resource "azurerm_network_security_rule" "public_rule_sshd_1" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 100
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "22"
   source_address_prefixes = []
@@ -45,7 +103,7 @@ resource "azurerm_network_security_rule" "public_rule_sshd_2" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 101
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "23"
   source_address_prefixes = []
@@ -61,7 +119,7 @@ resource "azurerm_network_security_rule" "public_rule_https" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 103
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "443"
   source_address_prefixes = []
@@ -78,7 +136,7 @@ resource "azurerm_network_security_rule" "private_rule_8080" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 100
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8080"
   source_address_prefix = "VirtualNetwork"
@@ -94,7 +152,7 @@ resource "azurerm_network_security_rule" "private_rule_30070" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 101
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30070"
   source_address_prefix = "VirtualNetwork"
@@ -109,7 +167,7 @@ resource "azurerm_network_security_rule" "private_rule_8020" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 102
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8020"
   source_address_prefix = "VirtualNetwork"
@@ -124,7 +182,7 @@ resource "azurerm_network_security_rule" "private_rule_30075" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 103
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30075"
   source_address_prefix = "VirtualNetwork"
@@ -139,7 +197,7 @@ resource "azurerm_network_security_rule" "private_rule_30010" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 104
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30010"
   source_address_prefix = "VirtualNetwork"
@@ -154,7 +212,7 @@ resource "azurerm_network_security_rule" "private_rule_30020" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 105
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30020"
   source_address_prefix = "VirtualNetwork"
@@ -169,7 +227,7 @@ resource "azurerm_network_security_rule" "private_rule_50090" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 106
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "50090"
   source_address_prefix = "VirtualNetwork"
@@ -184,7 +242,7 @@ resource "azurerm_network_security_rule" "private_rule_50090" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 106
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "50090"
   source_address_prefix = "VirtualNetwork"
@@ -200,7 +258,7 @@ resource "azurerm_network_security_rule" "private_rule_8088" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 107
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8088"
   source_address_prefix = "VirtualNetwork"
@@ -215,7 +273,7 @@ resource "azurerm_network_security_rule" "private_rule_8090" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 108
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8090"
   source_address_prefix = "VirtualNetwork"
@@ -230,7 +288,7 @@ resource "azurerm_network_security_rule" "private_rule_8141" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 109
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8141"
   source_address_prefix = "VirtualNetwork"
@@ -245,7 +303,7 @@ resource "azurerm_network_security_rule" "private_rule_8030" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 110
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8030"
   source_address_prefix = "VirtualNetwork"
@@ -260,7 +318,7 @@ resource "azurerm_network_security_rule" "private_rule_8050" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 111
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8050"
   source_address_prefix = "VirtualNetwork"
@@ -275,7 +333,7 @@ resource "azurerm_network_security_rule" "private_rule_30050" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 112
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30050"
   source_address_prefix = "VirtualNetwork"
@@ -290,7 +348,7 @@ resource "azurerm_network_security_rule" "private_rule_30060" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 113
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30060"
   source_address_prefix = "VirtualNetwork"
@@ -305,7 +363,7 @@ resource "azurerm_network_security_rule" "private_rule_10200" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 114
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "10200"
   source_address_prefix = "VirtualNetwork"
@@ -320,7 +378,7 @@ resource "azurerm_network_security_rule" "private_rule_8188" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 115
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8188"
   source_address_prefix = "VirtualNetwork"
@@ -336,7 +394,7 @@ resource "azurerm_network_security_rule" "private_rule_10001" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 116
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "10001"
   source_address_prefix = "VirtualNetwork"
@@ -351,7 +409,7 @@ resource "azurerm_network_security_rule" "private_rule_9083" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 117
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "9083"
   source_address_prefix = "VirtualNetwork"
@@ -367,7 +425,7 @@ resource "azurerm_network_security_rule" "private_rule_30111" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 118
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30111"
   source_address_prefix = "VirtualNetwork"
@@ -383,7 +441,7 @@ resource "azurerm_network_security_rule" "private_rule_19888" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 119
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "19888"
   source_address_prefix = "VirtualNetwork"
@@ -398,7 +456,7 @@ resource "azurerm_network_security_rule" "private_rule_10020" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 120
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "10020"
   source_address_prefix = "VirtualNetwork"
@@ -413,7 +471,7 @@ resource "azurerm_network_security_rule" "private_rule_13562" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 121
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "13562"
   source_address_prefix = "VirtualNetwork"
@@ -429,7 +487,7 @@ resource "azurerm_network_security_rule" "private_rule_11000" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 122
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "11000"
   source_address_prefix = "VirtualNetwork"
@@ -444,7 +502,7 @@ resource "azurerm_network_security_rule" "private_rule_11001" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 123
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "11001"
   source_address_prefix = "VirtualNetwork"
@@ -460,7 +518,7 @@ resource "azurerm_network_security_rule" "private_rule_6188" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 124
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "6188"
   source_address_prefix = "VirtualNetwork"
@@ -475,7 +533,7 @@ resource "azurerm_network_security_rule" "private_rule_30200" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 125
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "30200"
   source_address_prefix = "VirtualNetwork"
@@ -491,7 +549,7 @@ resource "azurerm_network_security_rule" "private_rule_16000" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 126
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "16000"
   source_address_prefix = "VirtualNetwork"
@@ -506,7 +564,7 @@ resource "azurerm_network_security_rule" "private_rule_16010" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 127
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "16010"
   source_address_prefix = "VirtualNetwork"
@@ -521,7 +579,7 @@ resource "azurerm_network_security_rule" "private_rule_16020" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 128
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "16020"
   source_address_prefix = "VirtualNetwork"
@@ -536,7 +594,7 @@ resource "azurerm_network_security_rule" "private_rule_2181" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 129
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "2181"
   source_address_prefix = "VirtualNetwork"
@@ -552,7 +610,7 @@ resource "azurerm_network_security_rule" "private_rule_9092" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 130
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "9092"
   source_address_prefix = "VirtualNetwork"
@@ -567,7 +625,7 @@ resource "azurerm_network_security_rule" "private_rule_9400" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 131
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "9400"
   source_address_prefix = "VirtualNetwork"
@@ -583,7 +641,7 @@ resource "azurerm_network_security_rule" "private_rule_10002" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 132
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "10002"
   source_address_prefix = "VirtualNetwork"
@@ -598,7 +656,7 @@ resource "azurerm_network_security_rule" "private_rule_8998" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 133
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8998"
   source_address_prefix = "VirtualNetwork"
@@ -613,7 +671,7 @@ resource "azurerm_network_security_rule" "private_rule_8001" {
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority = 134
   protocol = "Tcp"
-  resource_group_name = var.resource_group
+  resource_group_name = var.resource_group_name
   source_port_range = "*"
   destination_port_range = "8001"
   source_address_prefix = "VirtualNetwork"

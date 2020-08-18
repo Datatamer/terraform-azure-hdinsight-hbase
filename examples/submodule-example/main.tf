@@ -21,7 +21,7 @@ module "hdinsight_networking" {
 module "hdinsight_nsg" {
   source = "../../modules/hdinsight-security-groups"
   location = azurerm_resource_group.hdinsight-rg.location
-  resource_group = azurerm_resource_group.hdinsight-rg.name
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
   subnet_id = module.hdinsight_networking.subnet_id
   nsg_name = "example-nsg"
 }
