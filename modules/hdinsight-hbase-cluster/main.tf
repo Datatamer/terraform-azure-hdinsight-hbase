@@ -23,20 +23,20 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
 
   roles {
     head_node {
-      vm_size             = var.head_node_vm_size
-      username            = var.username
-      ssh_keys            = [file(var.path_to_ssh_key)]
-      subnet_id           = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id  = data.azurerm_virtual_network.selected.id
+      vm_size            = var.head_node_vm_size
+      username           = var.username
+      ssh_keys           = [file(var.path_to_ssh_key)]
+      subnet_id          = data.azurerm_subnet.subnet_selected.id
+      virtual_network_id = data.azurerm_virtual_network.selected.id
     }
 
     worker_node {
-      vm_size                  = var.worker_node_vm_size
-      username                 = var.username
-      ssh_keys                 = [file(var.path_to_ssh_key)]
-      subnet_id                = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id       = data.azurerm_virtual_network.selected.id
-      target_instance_count    = var.worker_count
+      vm_size               = var.worker_node_vm_size
+      username              = var.username
+      ssh_keys              = [file(var.path_to_ssh_key)]
+      subnet_id             = data.azurerm_subnet.subnet_selected.id
+      virtual_network_id    = data.azurerm_virtual_network.selected.id
+      target_instance_count = var.worker_count
     }
 
     zookeeper_node {
@@ -49,7 +49,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
   }
   lifecycle {
     ignore_changes = [
-      "tier", # otherwise doesn't ignore case
+      "tier",   # otherwise doesn't ignore case
       "gateway" # so password can be removed after creation
     ]
   }

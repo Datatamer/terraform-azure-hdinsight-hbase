@@ -1,11 +1,11 @@
 resource "azurerm_storage_account" "storage_account" {
-  name                     = var.hbase_storage_account_name
-  resource_group_name      = var.resource_group_name
-  location                 = var.location
+  name                = var.hbase_storage_account_name
+  resource_group_name = var.resource_group_name
+  location            = var.location
   # this is the backend engine
-  account_kind             = var.storage_account_kind
-  account_tier             = var.storage_account_tier
-  access_tier              = var.storage_account_access_tier
+  account_kind = var.storage_account_kind
+  account_tier = var.storage_account_tier
+  access_tier  = var.storage_account_access_tier
   # zone redundant storage
   account_replication_type = var.storage_account_replication_type
 

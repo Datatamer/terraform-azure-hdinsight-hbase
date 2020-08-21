@@ -1,5 +1,5 @@
 variable "nsg_name" {
-  type = string
+  type        = string
   description = "Name of the network security group"
 }
 
@@ -9,30 +9,30 @@ variable "nsg_name" {
 //}
 
 variable "location" {
-  type = string
+  type        = string
   description = "Azure location where the network security group will be created"
 }
 
 variable "resource_group_name" {
-  type = string
+  type        = string
   description = "Name of the resource group for the network security group"
 }
 
 variable "subnet_id" {
-  type = string
+  type        = string
   description = "Id of the subnet"
 }
 
 variable "tags" {
-  type = map(string)
+  type        = map(string)
   description = "Map of tags to attach to HBase cluster and storage account"
-  default = {}
+  default     = {}
 }
 
 //The following prefixes are mentioned in the azure docs here:
 //https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-management-ip-addresses#health-and-management-services-all-regions
 variable "source_address_mgmt_prefixes" {
-  type = list(string)
+  type        = list(string)
   description = "List of Source Address Prefixes for HDInsight Management services"
   default = [
     "168.61.49.99",
@@ -45,15 +45,20 @@ variable "source_address_mgmt_prefixes" {
 //The following prefix is mentioned in the azure docs here:
 //https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-management-ip-addresses#azure-dns-service
 variable "source_address_az_dns_service" {
-  type = string
+  type        = string
   description = "Source Address Prefix required for all VNets"
-  default = "168.63.129.16"
+  default     = "168.63.129.16"
+}
+
+variable "az_dns_service_used" {
+  type        = bool
+  description = "Flag to know if azure dns service is used"
 }
 
 //The following prefixes are mentioned in the azure docs here:
 //https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-management-ip-addresses#health-and-management-services-specific-regions
 variable "source_address_prefixes_mgmt_region_specific" {
-  type = list(string)
+  type        = list(string)
   description = "List of Source Address Prefixes for HDInsight Health and Management services specific to regions. Defaults are for East US 2"
   default = [
     "13.82.225.233",

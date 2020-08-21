@@ -13,6 +13,7 @@ No requirements.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| az\_dns\_service\_used | Flag to know if azure dns service is used | `bool` | n/a | yes |
 | location | Azure location where the network security group will be created | `string` | n/a | yes |
 | nsg\_name | Name of the network security group | `string` | n/a | yes |
 | resource\_group\_name | Name of the resource group for the network security group | `string` | n/a | yes |
