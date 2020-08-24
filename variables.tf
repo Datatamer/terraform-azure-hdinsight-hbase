@@ -33,11 +33,6 @@ variable "subnet_id" {
   type        = string
 }
 
-variable "vnet_name" {
-  description = "Name of the virtual network in which to deploy HBase resources"
-  type        = string
-}
-
 variable "vnet_id" {
   description = "ID of the virtual network in which to deploy HBase resources"
   type        = string
