@@ -34,7 +34,6 @@ module "hdinsight" {
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 
   # subnets/vnets
-  subnet_name = module.hdinsight_networking.subnet_name
   subnet_id = module.hdinsight_networking.subnet_id
   vnet_id = azurerm_virtual_network.hdinsight-vnet.id
   existing_network_resource_group = azurerm_resource_group.hdinsight-rg.name

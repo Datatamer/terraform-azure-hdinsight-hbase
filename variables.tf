@@ -23,11 +23,6 @@ variable "ip_rules" {
   type        = list(string)
 }
 
-variable "subnet_name" {
-  description = "Name of the subnet in which to deploy HDInsight HBase resources"
-  type        = string
-}
-
 variable "subnet_id" {
   description = "ID of the subnet in which to deploy HDInsight HBase resources"
   type        = string
