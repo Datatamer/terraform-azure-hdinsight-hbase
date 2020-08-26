@@ -14,9 +14,9 @@ resource "azurerm_storage_account" "storage_account" {
   enable_https_traffic_only = var.enable_https_traffic_only
 
   network_rules {
-    default_action = "Allow"
-        ip_rules                   = var.ip_rules
-        virtual_network_subnet_ids = [var.virtual_network_subnet_id]
+    default_action             = var.network_rules_default_action
+    ip_rules                   = var.ip_rules
+    virtual_network_subnet_ids = [var.virtual_network_subnet_id]
   }
 
   tags = var.tags

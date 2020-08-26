@@ -26,7 +26,7 @@ module "hdinsight_hbase" {
   module_depends_on               = [module.hdinsight_hbase_network]
   cluster_name                    = "tamr-hdinsight-cluster-name"
   existing_network_resource_group = azurerm_resource_group.hdinsight-rg.name
-  gateway_password                = "JayNathani7793"
+  gateway_password                = "TamrIsGreat123"
   hbase_storage_name              = "tamrstoragename"
   location                        = azurerm_resource_group.hdinsight-rg.location
   nsg_name                        = "tamr-hdinsight-nsg"
