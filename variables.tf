@@ -3,10 +3,6 @@ variable "resource_group_name" {
   type        = string
 }
 
-//data "azurerm_resource_group" "tamr_rg" {
-//    name = var.resource_group_name
-//}
-
 variable "location" {
   type        = string
   description = "Azure region where the HDInsight HBase cluster is to be deployed"
@@ -27,25 +23,14 @@ variable "ip_rules" {
   type        = list(string)
 }
 
-variable "subnet_name" {
-  description = "Name of the subnet in which to deploy HDInsight HBase resources"
+variable "subnet_id" {
+  description = "ID of the subnet in which to deploy HDInsight HBase resources"
   type        = string
 }
 
-variable "vnet_name" {
-  description = "Name of the virtual network in which to deploy HBase resources"
+variable "vnet_id" {
+  description = "ID of the virtual network in which to deploy HBase resources"
   type        = string
-}
-
-data "azurerm_virtual_network" "selected" {
-  resource_group_name = var.existing_network_resource_group
-  name                = var.vnet_name
-}
-
-data "azurerm_subnet" "subnet_selected" {
-  resource_group_name  = var.existing_network_resource_group
-  virtual_network_name = var.vnet_name
-  name                 = var.subnet_name
 }
 
 variable "existing_network_resource_group" {

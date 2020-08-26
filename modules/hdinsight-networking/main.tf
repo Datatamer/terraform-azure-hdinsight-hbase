@@ -3,5 +3,5 @@ resource "azurerm_subnet" "hdinsight-subnet" {
   resource_group_name  = var.resource_group_name
   virtual_network_name = var.vnet_name
   address_prefixes     = var.address_prefixes
-  service_endpoints = var.additional_service_endpoints
+  service_endpoints    = var.additional_service_endpoints
 }

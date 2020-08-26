@@ -4,7 +4,7 @@ module "hdinsight_hbase_storage" {
   resource_group_name              = var.resource_group_name
   location                         = var.location
   storage_container_name           = var.storage_container_name
-  virtual_network_subnet_id        = data.azurerm_subnet.subnet_selected.id
+  virtual_network_subnet_id        = var.subnet_id
   enable_https_traffic_only        = var.enable_https_traffic_only
   ip_rules                         = var.ip_rules
   network_rules_default_action     = var.network_rules_default_action
@@ -48,16 +48,16 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       vm_size            = var.head_node_vm_size
       username           = var.username
       ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id = data.azurerm_virtual_network.selected.id
+      subnet_id          = var.subnet_id
+      virtual_network_id = var.vnet_id
     }
 
     worker_node {
       vm_size               = var.worker_node_vm_size
       username              = var.username
       ssh_keys              = [file(var.path_to_ssh_key)]
-      subnet_id             = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id    = data.azurerm_virtual_network.selected.id
+      subnet_id             = var.subnet_id
+      virtual_network_id    = var.vnet_id
       target_instance_count = var.worker_count
     }
 
@@ -65,8 +65,8 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       vm_size            = var.zk_node_vm_size
       username           = var.username
       ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id = data.azurerm_virtual_network.selected.id
+      subnet_id          = var.subnet_id
+      virtual_network_id = var.vnet_id
     }
   }
   lifecycle {

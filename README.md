@@ -58,8 +58,8 @@ This modules creates:
 | path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
 | storage\_container\_name | Name of HDInsight HBase cluster storage container | `string` | n/a | yes |
-| subnet\_name | Name of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
-| vnet\_name | Name of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
+| subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
+| vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
 | worker\_count | Desired number of worker nodes | `number` | n/a | yes |
 | cluster\_tier | The cluster tier. Optionas are Standard or Premium | `string` | `"Standard"` | no |
 | enable\_advanced\_threat\_protection | Enable advanced threat protection | `bool` | `false` | no |
