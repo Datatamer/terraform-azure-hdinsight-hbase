@@ -9,7 +9,7 @@ Refer the `/examples` directory for a complete working example.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.4"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.3"
   cluster_name = "example-cluster-name"
   existing_network_resource_group = "example-resource-group"
   gateway_password = "example-gateway-password"
@@ -41,14 +41,13 @@ This modules creates:
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| azurerm | =2.11.0 |
+No provider.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| az\_dns\_service\_used | Flag to know if azure dns service is used | `bool` | n/a | yes |
 | cluster\_name | Name of HDInsight HBase cluster | `string` | n/a | yes |
 | existing\_network\_resource\_group | Resource group which owns the VNet | `string` | n/a | yes |
 | gateway\_password | Gateway password | `string` | n/a | yes |
@@ -57,9 +56,10 @@ This modules creates:
 | nsg\_name | Name of the network security group | `string` | n/a | yes |
 | path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
+| ssh\_address\_prefixes | List of Source Address prefixes to all ssh | `list(string)` | n/a | yes |
 | storage\_container\_name | Name of HDInsight HBase cluster storage container | `string` | n/a | yes |
-| subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
-| vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
+| subnet\_id | ID of the subnet used for deployment | `string` | n/a | yes |
+| vnet\_id | Id of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
 | worker\_count | Desired number of worker nodes | `number` | n/a | yes |
 | additional\_service\_endpoints | List of additional service endpoints | `list(string)` | <pre>[<br>  "Microsoft.Storage"<br>]</pre> | no |
 | address\_prefixes | List of cidr blocks for address prefixes | `list(string)` | `[]` | no |
@@ -71,6 +71,7 @@ This modules creates:
 | hdinsights\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
 | ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | `[]` | no |
+| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `any` | `null` | no |
 | network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
 | storage\_account\_kind | Account kind | `string` | `"StorageV2"` | no |

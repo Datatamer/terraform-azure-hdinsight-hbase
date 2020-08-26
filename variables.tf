@@ -24,13 +24,8 @@ variable "ip_rules" {
   default     = []
 }
 
-variable "subnet_id" {
-  description = "ID of the subnet in which to deploy HDInsight HBase resources"
-  type        = string
-}
-
 variable "vnet_id" {
-  description = "ID of the virtual network in which to deploy HBase resources"
+  description = "Id of the virtual network in which to deploy HBase resources"
   type        = string
 }
 
@@ -178,7 +173,23 @@ variable "nsg_name" {
   description = "Name of the network security group"
 }
 
-//variable "private_nsg_name" {
-//    type = string
-//    description = "Name of the private network security group"
-//}
+variable "az_dns_service_used" {
+  type        = bool
+  description = "Flag to know if azure dns service is used"
+}
+
+variable "subnet_id" {
+  type        = string
+  description = "ID of the subnet used for deployment"
+}
+
+variable "module_depends_on" {
+  type        = any
+  description = "Variable to make sure some other resources get created before the module execution"
+  default     = null
+}
+
+variable "ssh_address_prefixes" {
+  type        = list(string)
+  description = "List of Source Address prefixes to all ssh"
+}

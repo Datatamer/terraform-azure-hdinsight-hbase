@@ -76,3 +76,9 @@ variable "storage_container_access_type" {
   description = "Access type of the storage container. Options blob, container or private"
   default     = "private"
 }
+
+variable "module_depends_on" {
+  type        = any
+  description = "Variable to make sure some other resources get created before the module execution"
+  default     = null
+}

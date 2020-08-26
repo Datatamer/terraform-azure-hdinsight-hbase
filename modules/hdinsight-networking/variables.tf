@@ -24,3 +24,9 @@ variable "additional_service_endpoints" {
   description = "List of additional service endpoints"
   default     = ["Microsoft.Storage"]
 }
+
+variable "module_depends_on" {
+  type        = any
+  description = "Variable to make sure some other resources get created before the module execution"
+  default     = null
+}

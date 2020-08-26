@@ -1,27 +1,41 @@
 resource "azurerm_resource_group" "hdinsight-rg" {
-  name     = "example-rg"
+  name     = "tamr-hdinsight-hbase-resource-group"
   location = "East US"
 }
 
 resource "azurerm_virtual_network" "hdinsight-vnet" {
-  name                = "example-vnet"
+  depends_on          = [azurerm_resource_group.hdinsight-rg]
+  name                = "hdinsight-hbase-vnet"
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.hdinsight-rg.location
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 }
 
+module "hdinsight_hbase_network" {
+  source                       = "../../modules/hdinsight-networking"
+  module_depends_on            = [azurerm_virtual_network.hdinsight-vnet]
+  resource_group_name          = azurerm_resource_group.hdinsight-rg.name
+  subnet_name                  = "hdinsight-hbase-subnet"
+  vnet_name                    = azurerm_virtual_network.hdinsight-vnet.name
+  additional_service_endpoints = ["Microsoft.Storage"]
+  address_prefixes             = ["10.0.0.0/24"]
+}
+
 module "hdinsight_hbase" {
   source                          = "../../"
-  cluster_name                    = "example-cluster-name"
-  existing_network_resource_group = "example-networking-rg"
-  gateway_password                = "example-gateway-password"
-  hbase_storage_name              = "example-storage-name"
+  module_depends_on               = [module.hdinsight_hbase_network]
+  cluster_name                    = "tamr-hdinsight-cluster-name"
+  existing_network_resource_group = azurerm_resource_group.hdinsight-rg.name
+  gateway_password                = "JayNathani7793"
+  hbase_storage_name              = "tamrstoragename"
   location                        = azurerm_resource_group.hdinsight-rg.location
-  nsg_name                        = "example-network-security-group"
-  path_to_ssh_key                 = "path/to/ssh/key.pem"
+  nsg_name                        = "tamr-hdinsight-nsg"
+  path_to_ssh_key                 = "~/.ssh/azure.pub"
   resource_group_name             = azurerm_resource_group.hdinsight-rg.name
-  storage_container_name          = "example-storage-container"
-  subnet_name                     = "example-subnet"
-  vnet_name                       = azurerm_virtual_network.hdinsight-vnet.name
+  storage_container_name          = "tamr-storage-container"
+  vnet_id                         = azurerm_virtual_network.hdinsight-vnet.id
   worker_count                    = "2"
+  az_dns_service_used             = true
+  subnet_id                       = module.hdinsight_hbase_network.subnet_id
+  ssh_address_prefixes            = ["1.2.3.4"]
 }

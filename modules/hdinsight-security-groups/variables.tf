@@ -65,3 +65,14 @@ variable "source_address_prefixes_mgmt_region_specific" {
     "40.71.175.99"
   ]
 }
+
+variable "ssh_address_prefixes" {
+  type        = list(string)
+  description = "List of Source Address prefixes to all ssh"
+}
+
+variable "module_depends_on" {
+  type        = any
+  description = "Variable to make sure some other resources get created before the module execution"
+  default     = null
+}

@@ -9,6 +9,6 @@ output "storage_container_id" {
 }
 
 output "hbase_cluster_id" {
-  value       = azurerm_hdinsight_hbase_cluster.hdinsight_hbase_cluster.id
+  value       = module.hdinsight_hbase_cluster.hdinsight_hbase_cluster_id
   description = "The ID of the HDInsight HBase cluster"
 }

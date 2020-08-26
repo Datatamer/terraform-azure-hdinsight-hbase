@@ -1,4 +1,5 @@
 resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
+  depends_on          = [var.module_depends_on]
   name                = var.cluster_name
   resource_group_name = var.resource_group_name
   location            = var.location
@@ -26,16 +27,16 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       vm_size            = var.head_node_vm_size
       username           = var.username
       ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id = data.azurerm_virtual_network.selected.id
+      subnet_id          = var.subnet_id
+      virtual_network_id = var.vnet_id
     }
 
     worker_node {
       vm_size               = var.worker_node_vm_size
       username              = var.username
       ssh_keys              = [file(var.path_to_ssh_key)]
-      subnet_id             = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id    = data.azurerm_virtual_network.selected.id
+      subnet_id             = var.subnet_id
+      virtual_network_id    = var.vnet_id
       target_instance_count = var.worker_count
     }
 
@@ -43,14 +44,14 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       vm_size            = var.zk_node_vm_size
       username           = var.username
       ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = data.azurerm_subnet.subnet_selected.id
-      virtual_network_id = data.azurerm_virtual_network.selected.id
+      subnet_id          = var.subnet_id
+      virtual_network_id = var.vnet_id
     }
   }
   lifecycle {
     ignore_changes = [
-      "tier",   # otherwise doesn't ignore case
-      "gateway" # so password can be removed after creation
+      tier,   # otherwise doesn't ignore case
+      gateway # so password can be removed after creation
     ]
   }
 

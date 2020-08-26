@@ -1,5 +1,6 @@
 //Public network security group
 resource "azurerm_network_security_group" "hdinsight-hbase-nsg" {
+  depends_on          = [var.module_depends_on]
   name                = var.nsg_name
   location            = var.location
   resource_group_name = var.resource_group_name
@@ -23,7 +24,7 @@ resource "azurerm_network_security_rule" "public_rule_sshd_1" {
   resource_group_name         = var.resource_group_name
   source_port_range           = "*"
   destination_port_range      = "22"
-  source_address_prefixes     = []
+  source_address_prefixes     = var.ssh_address_prefixes
   destination_address_prefix  = "VirtualNetwork"
 }
 
@@ -38,14 +39,14 @@ resource "azurerm_network_security_rule" "public_rule_sshd_2" {
   resource_group_name         = var.resource_group_name
   source_port_range           = "*"
   destination_port_range      = "23"
-  source_address_prefixes     = []
+  source_address_prefixes     = var.ssh_address_prefixes
   destination_address_prefix  = "VirtualNetwork"
 }
 
 //Public ports https
 resource "azurerm_network_security_rule" "public_rule_https" {
   name                        = "Public https rule"
-  description                 = "https connections for Ambari UI, Ambari REST API, HCatalog REST API, Hive ODBC, ApacheHive JDBC, Hbase REST API, Spark REST API, Spark Thrift Server, Storm web UI, Kafka REST API"
+  description                 = "https connections for UIs and APIs"
   access                      = "Allow"
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
@@ -54,7 +55,7 @@ resource "azurerm_network_security_rule" "public_rule_https" {
   resource_group_name         = var.resource_group_name
   source_port_range           = "*"
   destination_port_range      = "443"
-  source_address_prefixes     = []
+  source_address_prefixes     = var.ssh_address_prefixes
   destination_address_prefix  = "VirtualNetwork"
 
 }
@@ -158,21 +159,6 @@ resource "azurerm_network_security_rule" "private_rule_50090" {
   direction                   = "Inbound"
   network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
   priority                    = 110
-  protocol                    = "Tcp"
-  resource_group_name         = var.resource_group_name
-  source_port_range           = "*"
-  destination_port_range      = "50090"
-  source_address_prefix       = "VirtualNetwork"
-  destination_address_prefix  = "VirtualNetwork"
-}
-
-resource "azurerm_network_security_rule" "private_rule_50090" {
-  name                        = "Private rule 50090"
-  description                 = "Secondary NameNode - checkpoint for metadata"
-  access                      = "Allow"
-  direction                   = "Inbound"
-  network_security_group_name = azurerm_network_security_group.hdinsight-hbase-nsg.name
-  priority                    = 111
   protocol                    = "Tcp"
   resource_group_name         = var.resource_group_name
   source_port_range           = "*"
@@ -628,7 +614,7 @@ resource "azurerm_network_security_rule" "nsg_rule_allow_hdi_mgmt_traffic" {
 //If Azure-provided DNS service is used, the following network security rule should be added
 resource "azurerm_network_security_rule" "nsg_rule_allow_azure_resolver_traffic" {
   count                       = var.az_dns_service_used ? 1 : 0
-  name                        = "allow_azure_resolver_traffic"
+  name                        = "allow_azure_dns_resolver_traffic"
   priority                    = 141
   direction                   = "Inbound"
   access                      = "Allow"
@@ -642,7 +628,7 @@ resource "azurerm_network_security_rule" "nsg_rule_allow_azure_resolver_traffic"
 }
 
 resource "azurerm_network_security_rule" "nsg_rule_allow_azure_port_53_traffic" {
-  name                        = "allow_azure_resolver_traffic"
+  name                        = "allow_azure_port_53_traffic"
   priority                    = 142
   direction                   = "Inbound"
   access                      = "Allow"
@@ -657,7 +643,7 @@ resource "azurerm_network_security_rule" "nsg_rule_allow_azure_port_53_traffic" 
 
 resource "azurerm_network_security_rule" "nsg_rule_allow_hdi_mgmt_traffic_regional" {
   name                        = "allow_hdi_mgmt_traffic_regional"
-  priority                    = 142
+  priority                    = 143
   direction                   = "Inbound"
   access                      = "Allow"
   protocol                    = "*"

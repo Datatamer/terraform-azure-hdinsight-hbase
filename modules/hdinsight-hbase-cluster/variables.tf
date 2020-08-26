@@ -13,13 +13,8 @@ variable "cluster_name" {
   type        = string
 }
 
-variable "subnet_name" {
-  description = "Name of the subnet in which to deploy HDInsight HBase resources"
-  type        = string
-}
-
-variable "vnet_name" {
-  description = "Name of the virtual network in which to deploy HBase resources"
+variable "vnet_id" {
+  description = "Id of the virtual network in which to deploy HBase resources"
   type        = string
 }
 
@@ -28,15 +23,9 @@ variable "network_resource_group" {
   type        = string
 }
 
-data "azurerm_virtual_network" "selected" {
-  resource_group_name = var.network_resource_group
-  name                = var.vnet_name
-}
-
-data "azurerm_subnet" "subnet_selected" {
-  resource_group_name  = var.network_resource_group
-  virtual_network_name = var.vnet_name
-  name                 = var.subnet_name
+variable "subnet_id" {
+  type        = string
+  description = "Id of the subnet"
 }
 
 variable "worker_count" {
@@ -116,4 +105,10 @@ variable "hbase_version" {
   type        = string
   description = "Version of hbase"
   default     = "1.1"
+}
+
+variable "module_depends_on" {
+  type        = any
+  description = "Variable to make sure some other resources get created before the module execution"
+  default     = null
 }
