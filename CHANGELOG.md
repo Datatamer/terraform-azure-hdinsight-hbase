@@ -1,3 +1,5 @@
+# Tamr Azure HDInsights HBase module - v0.1.4 - August 25th 2020
+* Remove redundant internal use of data blocks for the subnet and virtual network
 # Tamr Azure HDInsights HBase module - v0.1.3 - August 10th 2020
 * Fixes use of deprecated string values for `ignore_changes`
 # Tamr Azure HDInsights HBase module - v0.1.2 - June 1st 2020
