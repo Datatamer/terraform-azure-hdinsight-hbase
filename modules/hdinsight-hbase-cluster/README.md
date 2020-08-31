@@ -29,7 +29,7 @@ No requirements.
 | hbase\_version | Version of hbase | `string` | `"1.1"` | no |
 | hdinsights\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
-| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `any` | `null` | no |
+| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `list(any)` | `null` | no |
 | tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
 | username | Username | `string` | `"sshuser"` | no |
 | worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D3_V2"` | no |

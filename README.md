@@ -71,7 +71,7 @@ No provider.
 | hdinsights\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
 | ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | `[]` | no |
-| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `any` | `null` | no |
+| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `list(any)` | `null` | no |
 | network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
 | storage\_account\_kind | Account kind | `string` | `"StorageV2"` | no |

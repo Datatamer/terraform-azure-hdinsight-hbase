@@ -3,11 +3,6 @@ variable "nsg_name" {
   description = "Name of the network security group"
 }
 
-//variable "private_nsg_name" {
-//  type = string
-//  description = "Name of the private network security group"
-//}
-
 variable "location" {
   type        = string
   description = "Azure location where the network security group will be created"
@@ -66,13 +61,15 @@ variable "source_address_prefixes_mgmt_region_specific" {
   ]
 }
 
+//The following prefixes are mentioend in the azure docs here:
+//https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-management-ip-addresses#health-and-management-services-all-regions
 variable "ssh_address_prefixes" {
   type        = list(string)
-  description = "List of Source Address prefixes to all ssh"
+  description = "List of Source Address prefixes to all regions ssh"
 }
 
 variable "module_depends_on" {
-  type        = any
+  type        = list(any)
   description = "Variable to make sure some other resources get created before the module execution"
   default     = null
 }

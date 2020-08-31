@@ -1,4 +1,4 @@
-//Public network security group
+//Network security group
 resource "azurerm_network_security_group" "hdinsight-hbase-nsg" {
   depends_on          = [var.module_depends_on]
   name                = var.nsg_name
@@ -12,8 +12,8 @@ resource "azurerm_subnet_network_security_group_association" "nsg-subnet-connect
   subnet_id                 = var.subnet_id
 }
 
-//Public ports - ssh
-resource "azurerm_network_security_rule" "public_rule_sshd_1" {
+//Ports - ssh
+resource "azurerm_network_security_rule" "rule_sshd_1" {
   name                        = "Public sshd rule 1"
   description                 = "sshd connection to primary headnode and edgenode"
   access                      = "Allow"
@@ -28,7 +28,7 @@ resource "azurerm_network_security_rule" "public_rule_sshd_1" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "public_rule_sshd_2" {
+resource "azurerm_network_security_rule" "rule_sshd_2" {
   name                        = "Public sshd rule 2"
   description                 = "sshd connection to the secondary headnode"
   access                      = "Allow"
@@ -43,8 +43,8 @@ resource "azurerm_network_security_rule" "public_rule_sshd_2" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Public ports https
-resource "azurerm_network_security_rule" "public_rule_https" {
+//Ports https
+resource "azurerm_network_security_rule" "rule_https" {
   name                        = "Public https rule"
   description                 = "https connections for UIs and APIs"
   access                      = "Allow"
@@ -60,8 +60,8 @@ resource "azurerm_network_security_rule" "public_rule_https" {
 
 }
 
-//Private ports - Ambari
-resource "azurerm_network_security_rule" "private_rule_8080" {
+//Ports - Ambari
+resource "azurerm_network_security_rule" "rule_8080" {
   name                        = "Private rule 8080"
   description                 = "http connections to Ambari web UI and Ambari REST API"
   access                      = "Allow"
@@ -76,8 +76,8 @@ resource "azurerm_network_security_rule" "private_rule_8080" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - HDFS ports
-resource "azurerm_network_security_rule" "private_rule_30070" {
+//Ports - HDFS ports
+resource "azurerm_network_security_rule" "rule_30070" {
   name                        = "Private rule 30070"
   description                 = "NameNode web UI"
   access                      = "Allow"
@@ -92,7 +92,7 @@ resource "azurerm_network_security_rule" "private_rule_30070" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8020" {
+resource "azurerm_network_security_rule" "rule_8020" {
   name                        = "Private rule 8020"
   description                 = "NameNode metadata service"
   access                      = "Allow"
@@ -107,7 +107,7 @@ resource "azurerm_network_security_rule" "private_rule_8020" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_30075" {
+resource "azurerm_network_security_rule" "rule_30075" {
   name                        = "Private rule 30075"
   description                 = "DataNode WebUI"
   access                      = "Allow"
@@ -122,7 +122,7 @@ resource "azurerm_network_security_rule" "private_rule_30075" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_30010" {
+resource "azurerm_network_security_rule" "rule_30010" {
   name                        = "Private rule 30010"
   description                 = "DataNode data transfer"
   access                      = "Allow"
@@ -137,7 +137,7 @@ resource "azurerm_network_security_rule" "private_rule_30010" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_30020" {
+resource "azurerm_network_security_rule" "rule_30020" {
   name                        = "Private rule 30020"
   description                 = "DataNode Metadata operations"
   access                      = "Allow"
@@ -152,7 +152,7 @@ resource "azurerm_network_security_rule" "private_rule_30020" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_50090" {
+resource "azurerm_network_security_rule" "rule_50090" {
   name                        = "Private rule 50090"
   description                 = "Secondary NameNode - checkpoint for metadata"
   access                      = "Allow"
@@ -167,8 +167,8 @@ resource "azurerm_network_security_rule" "private_rule_50090" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - YARN ports
-resource "azurerm_network_security_rule" "private_rule_8088" {
+//Ports - YARN ports
+resource "azurerm_network_security_rule" "rule_8088" {
   name                        = "Private rule 8088"
   description                 = "Resource manager web UI"
   access                      = "Allow"
@@ -183,7 +183,7 @@ resource "azurerm_network_security_rule" "private_rule_8088" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8090" {
+resource "azurerm_network_security_rule" "rule_8090" {
   name                        = "Private rule 8090"
   description                 = "Resource manager web UI"
   access                      = "Allow"
@@ -198,7 +198,7 @@ resource "azurerm_network_security_rule" "private_rule_8090" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8141" {
+resource "azurerm_network_security_rule" "rule_8141" {
   name                        = "Private rule 8141"
   description                 = "Resource manager admin interface"
   access                      = "Allow"
@@ -213,7 +213,7 @@ resource "azurerm_network_security_rule" "private_rule_8141" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8030" {
+resource "azurerm_network_security_rule" "rule_8030" {
   name                        = "Private rule 8030"
   description                 = "Resource manager scheduler"
   access                      = "Allow"
@@ -228,7 +228,7 @@ resource "azurerm_network_security_rule" "private_rule_8030" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8050" {
+resource "azurerm_network_security_rule" "rule_8050" {
   name                        = "Private rule 8050"
   description                 = "Resource manager application interface"
   access                      = "Allow"
@@ -243,7 +243,7 @@ resource "azurerm_network_security_rule" "private_rule_8050" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_30050" {
+resource "azurerm_network_security_rule" "rule_30050" {
   name                        = "Private rule 30050"
   description                 = "NodeManager"
   access                      = "Allow"
@@ -258,7 +258,7 @@ resource "azurerm_network_security_rule" "private_rule_30050" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_30060" {
+resource "azurerm_network_security_rule" "rule_30060" {
   name                        = "Private rule 30060"
   description                 = "NodeManager web UI"
   access                      = "Allow"
@@ -273,7 +273,7 @@ resource "azurerm_network_security_rule" "private_rule_30060" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_10200" {
+resource "azurerm_network_security_rule" "rule_10200" {
   name                        = "Private rule 10200"
   description                 = "Timeline address"
   access                      = "Allow"
@@ -288,7 +288,7 @@ resource "azurerm_network_security_rule" "private_rule_10200" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8188" {
+resource "azurerm_network_security_rule" "rule_8188" {
   name                        = "Private rule 8188"
   description                 = "Timeline web UI"
   access                      = "Allow"
@@ -303,8 +303,8 @@ resource "azurerm_network_security_rule" "private_rule_8188" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - Hive ports
-resource "azurerm_network_security_rule" "private_rule_10001" {
+//Ports - Hive ports
+resource "azurerm_network_security_rule" "rule_10001" {
   name                        = "Private rule 10001"
   description                 = "Hive Server 2"
   access                      = "Allow"
@@ -319,7 +319,7 @@ resource "azurerm_network_security_rule" "private_rule_10001" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_9083" {
+resource "azurerm_network_security_rule" "rule_9083" {
   name                        = "Private rule 9083"
   description                 = "Hive Metastore"
   access                      = "Allow"
@@ -334,8 +334,8 @@ resource "azurerm_network_security_rule" "private_rule_9083" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - WebHCat ports
-resource "azurerm_network_security_rule" "private_rule_30111" {
+//Ports - WebHCat ports
+resource "azurerm_network_security_rule" "rule_30111" {
   name                        = "Private rule 30111"
   description                 = "WebHCat server"
   access                      = "Allow"
@@ -350,8 +350,8 @@ resource "azurerm_network_security_rule" "private_rule_30111" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - MapReduce ports
-resource "azurerm_network_security_rule" "private_rule_19888" {
+//Ports - MapReduce ports
+resource "azurerm_network_security_rule" "rule_19888" {
   name                        = "Private rule 19888"
   description                 = "Job History Web UI"
   access                      = "Allow"
@@ -366,7 +366,7 @@ resource "azurerm_network_security_rule" "private_rule_19888" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_10020" {
+resource "azurerm_network_security_rule" "rule_10020" {
   name                        = "Private rule 10020"
   description                 = "Job History server"
   access                      = "Allow"
@@ -381,7 +381,7 @@ resource "azurerm_network_security_rule" "private_rule_10020" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_13562" {
+resource "azurerm_network_security_rule" "rule_13562" {
   name                        = "Private rule 13562"
   description                 = "Shuffle Handler"
   access                      = "Allow"
@@ -396,8 +396,8 @@ resource "azurerm_network_security_rule" "private_rule_13562" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - Oozie
-resource "azurerm_network_security_rule" "private_rule_11000" {
+//Ports - Oozie
+resource "azurerm_network_security_rule" "rule_11000" {
   name                        = "Private rule 11000"
   description                 = "Oozie service URL"
   access                      = "Allow"
@@ -412,7 +412,7 @@ resource "azurerm_network_security_rule" "private_rule_11000" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_11001" {
+resource "azurerm_network_security_rule" "rule_11001" {
   name                        = "Private rule 11001"
   description                 = "Oozie admin port"
   access                      = "Allow"
@@ -427,8 +427,8 @@ resource "azurerm_network_security_rule" "private_rule_11001" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - Ambari Metrics
-resource "azurerm_network_security_rule" "private_rule_6188" {
+//Ports - Ambari Metrics
+resource "azurerm_network_security_rule" "rule_6188" {
   name                        = "Private rule 6188"
   description                 = "TimeLine service web UI"
   access                      = "Allow"
@@ -443,7 +443,7 @@ resource "azurerm_network_security_rule" "private_rule_6188" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_30200" {
+resource "azurerm_network_security_rule" "rule_30200" {
   name                        = "Private rule 30200"
   description                 = "TimeLine service web UI"
   access                      = "Allow"
@@ -458,8 +458,8 @@ resource "azurerm_network_security_rule" "private_rule_30200" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - Hbase ports
-resource "azurerm_network_security_rule" "private_rule_16000" {
+//Ports - Hbase ports
+resource "azurerm_network_security_rule" "rule_16000" {
   name                        = "Private rule 16000"
   description                 = "HMaster"
   access                      = "Allow"
@@ -474,7 +474,7 @@ resource "azurerm_network_security_rule" "private_rule_16000" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_16010" {
+resource "azurerm_network_security_rule" "rule_16010" {
   name                        = "Private rule 16010"
   description                 = "HMaster info Web UI"
   access                      = "Allow"
@@ -489,7 +489,7 @@ resource "azurerm_network_security_rule" "private_rule_16010" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_16020" {
+resource "azurerm_network_security_rule" "rule_16020" {
   name                        = "Private rule 16020"
   description                 = "Region server"
   access                      = "Allow"
@@ -504,7 +504,7 @@ resource "azurerm_network_security_rule" "private_rule_16020" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_2181" {
+resource "azurerm_network_security_rule" "rule_2181" {
   name                        = "Private rule 2181"
   description                 = "Zookeeper connection"
   access                      = "Allow"
@@ -519,8 +519,8 @@ resource "azurerm_network_security_rule" "private_rule_2181" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - Kafka ports
-resource "azurerm_network_security_rule" "private_rule_9092" {
+//Ports - Kafka ports
+resource "azurerm_network_security_rule" "rule_9092" {
   name                        = "Private rule 9092"
   description                 = "Broker for client communication"
   access                      = "Allow"
@@ -535,7 +535,7 @@ resource "azurerm_network_security_rule" "private_rule_9092" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_9400" {
+resource "azurerm_network_security_rule" "rule_9400" {
   name                        = "Private rule 9400"
   description                 = "Kafka REST Proxy"
   access                      = "Allow"
@@ -550,8 +550,8 @@ resource "azurerm_network_security_rule" "private_rule_9400" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-//Private ports - Spark ports
-resource "azurerm_network_security_rule" "private_rule_10002" {
+//Ports - Spark ports
+resource "azurerm_network_security_rule" "rule_10002" {
   name                        = "Private rule 10002"
   description                 = "Spark thrift servers"
   access                      = "Allow"
@@ -566,7 +566,7 @@ resource "azurerm_network_security_rule" "private_rule_10002" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8998" {
+resource "azurerm_network_security_rule" "rule_8998" {
   name                        = "Private rule 8998"
   description                 = "Livy server"
   access                      = "Allow"
@@ -581,7 +581,7 @@ resource "azurerm_network_security_rule" "private_rule_8998" {
   destination_address_prefix  = "VirtualNetwork"
 }
 
-resource "azurerm_network_security_rule" "private_rule_8001" {
+resource "azurerm_network_security_rule" "rule_8001" {
   name                        = "Private rule 8001"
   description                 = "Jupyter notebook"
   access                      = "Allow"

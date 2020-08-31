@@ -51,7 +51,7 @@ No requirements.
 | virtual\_network\_subnet\_id | Subnet ID for the storage account in the virtual network | `string` | n/a | yes |
 | enable\_https\_traffic\_only | Force https traffic only boolean flag | `bool` | `true` | no |
 | ip\_rules | List of IPs explicitly allowed to access UI | `list(string)` | `[]` | no |
-| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `any` | `null` | no |
+| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `list(any)` | `null` | no |
 | network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
 | storage\_account\_kind | Type of storage account. Options are BlobStorage, BlockBlogStorage, FileStorage, Storage, StorageV2 | `string` | `"StorageV2"` | no |

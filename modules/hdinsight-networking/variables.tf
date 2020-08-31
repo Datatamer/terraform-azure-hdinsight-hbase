@@ -26,7 +26,7 @@ variable "additional_service_endpoints" {
 }
 
 variable "module_depends_on" {
-  type        = any
+  type        = list(any)
   description = "Variable to make sure some other resources get created before the module execution"
   default     = null
 }

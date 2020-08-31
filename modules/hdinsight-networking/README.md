@@ -39,7 +39,7 @@ No requirements.
 | vnet\_name | Name of the Virtual Network | `string` | n/a | yes |
 | additional\_service\_endpoints | List of additional service endpoints | `list(string)` | <pre>[<br>  "Microsoft.Storage"<br>]</pre> | no |
 | address\_prefixes | List of cidr blocks for address prefixes | `list(string)` | `[]` | no |
-| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `any` | `null` | no |
+| module\_depends\_on | Variable to make sure some other resources get created before the module execution | `list(any)` | `null` | no |
 
 ## Outputs
 

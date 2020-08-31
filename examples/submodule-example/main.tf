@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "hdinsight-rg" {
-  name     = "tamr-hdinsight-hbase-resource-group"
+  name     = "tamr-hdinsight-hbase-rg-sub-example"
   location = "East US"
 }
 
