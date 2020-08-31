@@ -55,7 +55,7 @@ resource "azurerm_network_security_rule" "rule_https" {
   resource_group_name         = var.resource_group_name
   source_port_range           = "*"
   destination_port_range      = "443"
-  source_address_prefixes     = var.ssh_address_prefixes
+  source_address_prefix       = "VirtualNetwork"
   destination_address_prefix  = "VirtualNetwork"
 
 }
