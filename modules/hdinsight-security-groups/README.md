@@ -38,3 +38,4 @@ No requirements.
 This repo is based on:
 * [HDInsight Management IP Address](https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-management-ip-addresses)
 * [Ports for HDInsight](https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services)
+* [Management IPs for HDInsight](https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-management-ip-addresses)
