@@ -11,7 +11,6 @@ Inline example implementation of the module.  This is the most basic example of 
 module "minimal" {
   source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.4"
   cluster_name = "example-cluster-name"
-  existing_network_resource_group = "example-resource-group"
   gateway_password = "example-gateway-password"
   hbase_storage_name = "example-storage"
   ip_rules = ["1.2.3.4", "2.3.4.5"]
@@ -37,20 +36,19 @@ This modules creates:
 | Name | Version |
 |------|---------|
 | terraform | >= 0.12 |
-| azurerm | =2.11.0 |
+| azurerm | >= 2.11.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | =2.11.0 |
+| azurerm | >= 2.11.0 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | cluster\_name | Name of HDInsight HBase cluster | `string` | n/a | yes |
-| existing\_network\_resource\_group | Resource group which owns the VNet | `string` | n/a | yes |
 | gateway\_password | Gateway password | `string` | n/a | yes |
 | hbase\_storage\_name | Name of HBase storage account | `string` | n/a | yes |
 | ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | n/a | yes |

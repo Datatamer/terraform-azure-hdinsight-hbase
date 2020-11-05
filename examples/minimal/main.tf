@@ -1,5 +1,5 @@
 resource "azurerm_resource_group" "hdinsight-rg" {
-  name = "minimal-hdinsight-cluster-example-rg"
+  name     = "minimal-hdinsight-cluster-example-rg"
   location = "East US 2"
 }
 
@@ -11,35 +11,34 @@ resource "azurerm_virtual_network" "hdinsight-vnet" {
 }
 
 module "hdinsight_networking" {
-  source = "../../modules/hdinsight-networking"
-  subnet_name = "minimal-hdinsight-cluster-example-subnet"
+  source              = "../../modules/hdinsight-networking"
+  subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
-  vnet_name = azurerm_virtual_network.hdinsight-vnet.name
-  address_prefixes = ["10.0.1.0/24"]
+  vnet_name           = azurerm_virtual_network.hdinsight-vnet.name
+  address_prefixes    = ["10.0.1.0/24"]
 }
 
 module "hdinsight" {
   source = "../../"
 
   # names
-  cluster_name = "minimal-hdinsight-cluster"
+  cluster_name           = "minimal-hdinsight-cluster"
   storage_container_name = "minimalstoragecontainer"
-  hbase_storage_name = "minimalhbasestorage"
+  hbase_storage_name     = "minimalhbasestorage"
 
   # scale
   worker_count = 3
 
   # resource group
-  location = azurerm_resource_group.hdinsight-rg.location
+  location            = azurerm_resource_group.hdinsight-rg.location
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 
   # subnets/vnets
-  subnet_id = module.hdinsight_networking.subnet_id
-  vnet_id = azurerm_virtual_network.hdinsight-vnet.id
-  existing_network_resource_group = azurerm_resource_group.hdinsight-rg.name
-  gateway_password = "Password123"
+  subnet_id        = module.hdinsight_networking.subnet_id
+  vnet_id          = azurerm_virtual_network.hdinsight-vnet.id
+  gateway_password = "Password123" #tfsec:ignore:GEN003
 
   # creds
-  ip_rules = ["1.2.3.4"] # replace with your IP
+  ip_rules        = ["1.2.3.4"] # replace with your IP
   path_to_ssh_key = "~/.ssh/id_rsa.pub"
 }

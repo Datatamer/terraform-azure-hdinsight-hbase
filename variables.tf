@@ -33,11 +33,6 @@ variable "vnet_id" {
   type        = string
 }
 
-variable "existing_network_resource_group" {
-  description = "Resource group which owns the VNet"
-  type        = string
-}
-
 variable "worker_count" {
   description = "Desired number of worker nodes"
   type        = number
