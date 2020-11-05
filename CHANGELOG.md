@@ -1,3 +1,5 @@
+# Tamr Azure HDInsights HBase module - v0.2.0 - November 5th 2020
+* Removes input variable `existing_network_resource_group`
 # Tamr Azure HDInsights HBase module - v0.1.5 - November 2nd 2020
 * Removes provider.tf
 # Tamr Azure HDInsights HBase module - v0.1.4 - August 25th 2020

@@ -11,7 +11,6 @@ Inline example implementation of the module.  This is the most basic example of 
 module "minimal" {
   source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.4"
   cluster_name = "example-cluster-name"
-  existing_network_resource_group = "example-resource-group"
   gateway_password = "example-gateway-password"
   hbase_storage_name = "example-storage"
   ip_rules = ["1.2.3.4", "2.3.4.5"]
