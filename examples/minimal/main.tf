@@ -34,9 +34,9 @@ module "hdinsight" {
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 
   # subnets/vnets
-  subnet_id                       = module.hdinsight_networking.subnet_id
-  vnet_id                         = azurerm_virtual_network.hdinsight-vnet.id
-  gateway_password                = "Password123" #tfsec:ignore:GEN003
+  subnet_id        = module.hdinsight_networking.subnet_id
+  vnet_id          = azurerm_virtual_network.hdinsight-vnet.id
+  gateway_password = "Password123" #tfsec:ignore:GEN003
 
   # creds
   ip_rules        = ["1.2.3.4"] # replace with your IP
