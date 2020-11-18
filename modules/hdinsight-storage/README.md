@@ -64,6 +64,7 @@ No requirements.
 | Name | Description |
 |------|-------------|
 | storage\_account\_id | ID of the azure storage account |
+| storage\_account\_name | Name of the storage account |
 | storage\_account\_primary\_access\_key | Primary access key of the storage account |
 | storage\_container\_id | ID of the azure storage container |
 
