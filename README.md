@@ -9,7 +9,7 @@ Refer the `/examples` directory for a complete working example.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.1.4"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.2.1"
   cluster_name = "example-cluster-name"
   gateway_password = "example-gateway-password"
   hbase_storage_name = "example-storage"
@@ -83,6 +83,8 @@ This modules creates:
 |------|-------------|
 | hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
 | storage\_account\_id | The ID of the Storage Account |
+| storage\_account\_name | Name of the storage account |
+| storage\_account\_primary\_access\_key | Primary access key of the storage account |
 | storage\_container\_id | The ID of the Storage Container |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
