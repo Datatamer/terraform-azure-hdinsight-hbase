@@ -1,5 +1,5 @@
 # Tamr Azure HDInsights HBase module - v0.2.1 - November 18th 2020
-* Add output variable `storage_account_name`
+* Add output variables `storage_account_name` and `storage_account_primary_access_key`
 # Tamr Azure HDInsights HBase module - v0.2.0 - November 5th 2020
 * Removes input variable `existing_network_resource_group`
 # Tamr Azure HDInsights HBase module - v0.1.5 - November 2nd 2020

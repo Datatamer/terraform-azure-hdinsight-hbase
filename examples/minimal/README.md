@@ -21,6 +21,8 @@ No input.
 |------|-------------|
 | hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
 | storage\_account\_id | The ID of the Storage Account |
+| storage\_account\_name | Name of the storage account |
+| storage\_account\_primary\_access\_key | Primary access key of the storage account |
 | storage\_container\_id | The ID of the Storage Container |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
