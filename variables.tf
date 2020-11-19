@@ -107,7 +107,7 @@ variable "enable_advanced_threat_protection" {
   default     = false
 }
 
-variable "hdinsights_cluster_version" {
+variable "hdinsight_cluster_version" {
   description = "Version for HDInsight cluster"
   type        = string
   default     = "3.6"
