@@ -1,6 +1,6 @@
-# Tamr Azure HDInsights HBase Module
+# Tamr Azure HDInsight HBase Module
 
-This module creates an HDInsights HBase cluster for Tamr in Azure.
+This module creates an HDInsight HBase cluster for Tamr in Azure.
 
 # Examples
 Refer the `/examples` directory for a complete working example.
@@ -9,7 +9,7 @@ Refer the `/examples` directory for a complete working example.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsights-hbase.git?ref=0.2.1"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=0.3.0"
   cluster_name = "example-cluster-name"
   gateway_password = "example-gateway-password"
   hbase_storage_name = "example-storage"
@@ -64,7 +64,7 @@ This modules creates:
 | enable\_https\_traffic\_only | Force https traffic only boolean flag | `bool` | `true` | no |
 | gateway\_username | Gateway username | `string` | `"admin"` | no |
 | hbase\_version | Version of hbase | `string` | `"1.1"` | no |
-| hdinsights\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
+| hdinsight\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
 | network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
