@@ -9,7 +9,7 @@ Refer the `/examples` directory for a complete working example.
 Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
 ```
 module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=0.3.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=1.0.0"
   cluster_name = "example-cluster-name"
   gateway_password = "example-gateway-password"
   hbase_storage_name = "example-storage"
@@ -40,9 +40,7 @@ This modules creates:
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| azurerm | >= 2.11.0 |
+No provider.
 
 ## Inputs
 
@@ -59,7 +57,7 @@ This modules creates:
 | subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
 | vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
 | worker\_count | Desired number of worker nodes | `number` | n/a | yes |
-| cluster\_tier | The cluster tier. Optionas are Standard or Premium | `string` | `"Standard"` | no |
+| cluster\_tier | The cluster tier. Options are Standard or Premium | `string` | `"Standard"` | no |
 | enable\_advanced\_threat\_protection | Enable advanced threat protection | `bool` | `false` | no |
 | enable\_https\_traffic\_only | Force https traffic only boolean flag | `bool` | `true` | no |
 | gateway\_username | Gateway username | `string` | `"admin"` | no |
@@ -73,7 +71,7 @@ This modules creates:
 | storage\_account\_tier | Account tier | `string` | `"Standard"` | no |
 | storage\_container\_access\_type | Access type of the storage container. Options blob, container or private | `string` | `"private"` | no |
 | tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
-| username | Username | `string` | `"sshuser"` | no |
+| username | Username for ssh access to the instances of the cluster | `string` | `"sshuser"` | no |
 | worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D3_V2"` | no |
 | zk\_node\_vm\_size | Zookeeper nodes vm size | `string` | `"Standard_A4_v2"` | no |
 
@@ -82,6 +80,7 @@ This modules creates:
 | Name | Description |
 |------|-------------|
 | hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
+| hdinsight\_cluster | All of the outputs of the HDInsight HBase cluster |
 | storage\_account\_id | The ID of the Storage Account |
 | storage\_account\_name | Name of the storage account |
 | storage\_account\_primary\_access\_key | Primary access key of the storage account |

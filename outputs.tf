@@ -9,8 +9,13 @@ output "storage_container_id" {
 }
 
 output "hbase_cluster_id" {
-  value       = azurerm_hdinsight_hbase_cluster.hdinsight_hbase_cluster.id
+  value       = module.hdinsight_cluster.hbase_cluster_id
   description = "The ID of the HDInsight HBase cluster"
+}
+
+output "hdinsight_cluster" {
+  value       = module.hdinsight_cluster.hdinsight_cluster
+  description = "All of the outputs of the HDInsight HBase cluster"
 }
 
 output "storage_account_primary_access_key" {

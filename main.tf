@@ -16,65 +16,43 @@ module "hdinsight_hbase_storage" {
   tags                             = var.tags
 }
 
-#
-# Hbase cluster
-#
-resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
-  name                = var.cluster_name
-  resource_group_name = var.resource_group_name
+module "hdinsight_cluster" {
+  source = "./modules/hdinsight-cluster"
+
+  # General
+  cluster_name        = var.cluster_name
   location            = var.location
-  # this specific so tf plan comes back unchanged
-  cluster_version = var.hdinsight_cluster_version
-  tier            = var.cluster_tier
+  resource_group_name = var.resource_group_name
 
-  component_version {
-    hbase = var.hbase_version
-  }
+  # HBase
+  hbase_version             = var.hbase_version
+  hdinsight_cluster_version = var.hdinsight_cluster_version
 
-  gateway {
-    enabled  = true
-    username = var.gateway_username
-    password = var.gateway_password
-  }
+  # Storage
+  storage_account_primary_access_key = module.hdinsight_hbase_storage.storage_account_primary_access_key
+  storage_container_id               = module.hdinsight_hbase_storage.storage_container_id
 
-  storage_account {
-    storage_container_id = module.hdinsight_hbase_storage.storage_container_id
-    storage_account_key  = module.hdinsight_hbase_storage.storage_account_primary_access_key
-    is_default           = true
-  }
+  # Networking
+  subnet_id = var.subnet_id
+  vnet_id   = var.vnet_id
 
-  roles {
-    head_node {
-      vm_size            = var.head_node_vm_size
-      username           = var.username
-      ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = var.subnet_id
-      virtual_network_id = var.vnet_id
-    }
+  # SSH Access
+  username        = var.username
+  path_to_ssh_key = var.path_to_ssh_key
 
-    worker_node {
-      vm_size               = var.worker_node_vm_size
-      username              = var.username
-      ssh_keys              = [file(var.path_to_ssh_key)]
-      subnet_id             = var.subnet_id
-      virtual_network_id    = var.vnet_id
-      target_instance_count = var.worker_count
-    }
+  # Portal Access
+  gateway_username = var.gateway_username
+  gateway_password = var.gateway_password
 
-    zookeeper_node {
-      vm_size            = var.zk_node_vm_size
-      username           = var.username
-      ssh_keys           = [file(var.path_to_ssh_key)]
-      subnet_id          = var.subnet_id
-      virtual_network_id = var.vnet_id
-    }
-  }
-  lifecycle {
-    ignore_changes = [
-      tier,   # otherwise doesn't ignore case
-      gateway # so password can be removed after creation
-    ]
-  }
+  # Scale
+  cluster_tier = var.cluster_tier
 
+  head_node_vm_size = var.head_node_vm_size
+  zk_node_vm_size   = var.zk_node_vm_size
+
+  worker_count        = var.worker_count
+  worker_node_vm_size = var.worker_node_vm_size
+
+  # Metadata
   tags = var.tags
 }
