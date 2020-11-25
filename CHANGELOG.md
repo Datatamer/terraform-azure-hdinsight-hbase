@@ -1,5 +1,9 @@
 # Tamr Azure HDInsight HBase module
 
+## v2.0.0 - November 25th 2020
+* New module for security group rules
+* Security group added to the networking module
+
 ## v1.0.0 - November 20th 2020
 * Moves creation of the HDInsight cluster to its own module. Breaking change if upgrading from
  previous versions.
