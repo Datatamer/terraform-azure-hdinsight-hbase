@@ -181,7 +181,7 @@ variable "private_traffic_ports" {
 variable "public_traffic_ports" {
   description = <<EOF
   Destination ports to create network rules for. See public ports:
-  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#non-public-ports
+  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#public-ports
   EOF
   type        = list(number)
   default = [
