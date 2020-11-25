@@ -11,14 +11,29 @@ resource "azurerm_virtual_network" "hdinsight-vnet" {
 }
 
 module "hdinsight_networking" {
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=2.0.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
   vnet_name           = azurerm_virtual_network.hdinsight-vnet.name
   address_prefixes    = ["10.0.1.0/24"]
+  location            = azurerm_resource_group.hdinsight-rg.location
+  nsg_name            = "minimal-hdinsight-network-security-group"
 }
 
+resource "random_password" "gateway_pass" {
+  length  = 64
+  special = true
+  upper   = true
+  lower   = true
+}
+
+variable "your_ip" {
+  type        = string
+  description = "Your IP so that you can access the ambari portal and storage container"
+}
 module "hdinsight" {
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=2.0.0"
   source = "../../"
 
   # names
@@ -36,9 +51,22 @@ module "hdinsight" {
   # subnets/vnets
   subnet_id        = module.hdinsight_networking.subnet_id
   vnet_id          = azurerm_virtual_network.hdinsight-vnet.id
-  gateway_password = "Password123" #tfsec:ignore:GEN003
+  gateway_password = random_password.gateway_pass.result
 
   # creds
-  ip_rules        = ["1.2.3.4"] # replace with your IP
+  ip_rules        = [var.your_ip]
   path_to_ssh_key = "~/.ssh/id_rsa.pub"
+
+  # Security Group Rules
+  nsg_name           = module.hdinsight_networking.security_group.name
+  nsg_resource_group = azurerm_resource_group.hdinsight-rg.name
+  private_traffic_address_prefixes = [
+    "10.0.0.0/16",
+  ]
+
+  public_traffic_address_prefixes = [
+    var.your_ip,
+  ]
+
+  destination_address = "10.0.1.0/24"
 }

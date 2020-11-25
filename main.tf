@@ -56,3 +56,35 @@ module "hdinsight_cluster" {
   # Metadata
   tags = var.tags
 }
+
+
+module "private_security_group_rules" {
+  source = "./modules/hdinsight-network-rules"
+
+  # Network Security Group
+  nsg_name                = var.nsg_name
+  nsg_resource_group_name = var.nsg_resource_group
+
+  # Networking
+  ports                   = var.private_traffic_ports
+  source_address_prefixes = var.private_traffic_address_prefixes
+  destination_address     = var.destination_address
+
+  # Starting priority
+  priority_offset = var.private_traffic_priority_offset
+}
+
+module "public_security_group_rules" {
+  source = "./modules/hdinsight-network-rules"
+  # Network Security Group
+  nsg_name                = var.nsg_name
+  nsg_resource_group_name = var.nsg_resource_group
+
+  # Networking
+  ports                   = var.public_traffic_ports
+  source_address_prefixes = var.public_traffic_address_prefixes
+  destination_address     = var.destination_address
+
+  # Starting priority
+  priority_offset = var.public_traffic_priority_offset
+}

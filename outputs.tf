@@ -27,3 +27,13 @@ output "storage_account_name" {
   value       = module.hdinsight_hbase_storage.storage_account_name
   description = "Name of the storage account"
 }
+
+output "public_security_group_rules" {
+  value       = module.public_security_group_rules
+  description = "Security group for user traffic"
+}
+
+output "private_security_group_rules" {
+  value       = module.public_security_group_rules
+  description = "Security group for services traffic"
+}

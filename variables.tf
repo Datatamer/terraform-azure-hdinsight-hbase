@@ -154,3 +154,72 @@ variable "hbase_version" {
   description = "Version of hbase"
   default     = "1.1"
 }
+
+variable "destination_address" {
+  type        = string
+  description = <<EOF
+  CIDR or destination IP range or * to match any IP.
+  Tags such as ‘VirtualNetwork’, ‘AzureLoadBalancer’ and ‘Internet’ can also be used."
+  EOF
+}
+
+variable "private_traffic_ports" {
+  description = <<EOF
+  Destination ports to create network rules for. See non-public ports:
+  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#non-public-ports
+  EOF
+  type        = list(number)
+  default = [
+    8080,  // Ambari web UI + REST API
+    16000, // HMaster
+    16010, // HMaster info Web UI
+    16020, // Region server
+    2181,  // The port that clients use to connect to ZooKeeper
+  ]
+}
+
+variable "public_traffic_ports" {
+  description = <<EOF
+  Destination ports to create network rules for. See public ports:
+  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#public-ports
+  EOF
+  type        = list(number)
+  default = [
+    22,  // sshd connection to primary headnode and edgenode
+    23,  // sshd connection to the secondary headnode
+    443, // https connections for UIs and APIs
+  ]
+
+}
+
+variable "private_traffic_address_prefixes" {
+  type        = list(string)
+  description = "List of source address prefixes for private traffic. Tags may not be used."
+}
+
+variable "public_traffic_address_prefixes" {
+  type        = list(string)
+  description = "List of source address prefixes for public traffic. Tags may not be used."
+}
+
+variable "public_traffic_priority_offset" {
+  default     = 2000
+  type        = number
+  description = "Starting priority of public security group rules."
+}
+
+variable "private_traffic_priority_offset" {
+  default     = 1000
+  type        = number
+  description = "Starting priority of private security group rules."
+}
+
+variable "nsg_name" {
+  description = "Name of an existing network security group to add rules to"
+  type        = string
+}
+
+variable "nsg_resource_group" {
+  description = "Name of the resource group of the network security group"
+  type        = string
+}

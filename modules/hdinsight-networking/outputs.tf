@@ -7,3 +7,8 @@ output "subnet_name" {
   value       = azurerm_subnet.hdinsight-subnet.name
   description = "Name of the created subnet"
 }
+
+output "security_group" {
+  value       = azurerm_network_security_group.hdinsight-hbase-nsg
+  description = "Network security group"
+}
