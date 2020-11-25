@@ -5,25 +5,6 @@ This module creates an HDInsight HBase cluster for Tamr in Azure.
 # Examples
 Refer the `/examples` directory for a complete working example.
 
-## Basic
-Inline example implementation of the module.  This is the most basic example of what it would look like to use this module.
-```
-module "minimal" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=2.0.0"
-  cluster_name = "example-cluster-name"
-  gateway_password = "example-gateway-password"
-  hbase_storage_name = "example-storage"
-  ip_rules = ["1.2.3.4", "2.3.4.5"]
-  location = "example-location"
-  resource_group_name = "example-resource-group-name"
-  ssh_key = "example-ssh-key"
-  storage_container_name = "example-storage-container-name"
-  subnet_id = "example-subnet-id"
-  vnet_id = "example-vnet-id"
-  worker_count = 1
-}
-```
-
 # Resources Created
 This modules creates:
 * HDInsight HBase cluster
@@ -73,7 +54,7 @@ No provider.
 | network\_rules\_default\_action | Default action for the network rules. Options are Allow or Deny | `string` | `"Deny"` | no |
 | private\_traffic\_ports | Destination ports to create network rules for. See non-public ports:<br>  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#non-public-ports | `list(number)` | <pre>[<br>  8080,<br>  16000,<br>  16010,<br>  16020,<br>  2181<br>]</pre> | no |
 | private\_traffic\_priority\_offset | Starting priority of private security group rules. | `number` | `1000` | no |
-| public\_traffic\_ports | Destination ports to create network rules for. See public ports:<br>  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#non-public-ports | `list(number)` | <pre>[<br>  22,<br>  23,<br>  443<br>]</pre> | no |
+| public\_traffic\_ports | Destination ports to create network rules for. See public ports:<br>  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#public-ports | `list(number)` | <pre>[<br>  22,<br>  23,<br>  443<br>]</pre> | no |
 | public\_traffic\_priority\_offset | Starting priority of public security group rules. | `number` | `2000` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
 | storage\_account\_kind | Account kind | `string` | `"StorageV2"` | no |

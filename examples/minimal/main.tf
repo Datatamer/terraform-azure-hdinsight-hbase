@@ -11,6 +11,7 @@ resource "azurerm_virtual_network" "hdinsight-vnet" {
 }
 
 module "hdinsight_networking" {
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=2.0.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -32,6 +33,7 @@ variable "your_ip" {
   description = "Your IP so that you can access the ambari portal and storage container"
 }
 module "hdinsight" {
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=2.0.0"
   source = "../../"
 
   # names
