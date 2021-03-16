@@ -42,13 +42,13 @@ variable "path_to_ssh_key" {
 variable "head_node_vm_size" {
   description = "Head node vm size"
   type        = string
-  default     = "Standard_D3_V2"
+  default     = "Standard_D12_V2"
 }
 
 variable "worker_node_vm_size" {
   description = "Worker nodes vm size"
   type        = string
-  default     = "Standard_D3_V2"
+  default     = "Standard_D12_V2"
 }
 
 variable "zk_node_vm_size" {

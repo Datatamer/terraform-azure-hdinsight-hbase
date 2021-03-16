@@ -56,10 +56,10 @@ No requirements.
 | gateway\_username | Gateway username | `string` | `"admin"` | no |
 | hbase\_version | Version of hbase | `string` | `"1.1"` | no |
 | hdinsight\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
-| head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D3_V2"` | no |
+| head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D12_V2"` | no |
 | tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
 | username | Username for ssh access to the instances of the cluster | `string` | `"sshuser"` | no |
-| worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D3_V2"` | no |
+| worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D12_V2"` | no |
 | zk\_node\_vm\_size | Zookeeper nodes vm size | `string` | `"Standard_A4_v2"` | no |
 
 ## Outputs
