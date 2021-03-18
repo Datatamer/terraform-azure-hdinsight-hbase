@@ -1,5 +1,11 @@
 # Tamr Azure HDInsight HBase module
 
+## v2.1.0 - March 16th 2021
+* Change defaults for `head_node_vm_size` and `worker_node_vm_size`.  If
+  upgrading and relying on default values, this will cause the
+  HDInsight cluster to be re-deployed.  Explicitly setting these
+  variables to the previous values will avoid this behavior.
+
 ## v2.0.0 - November 25th 2020
 * New module for security group rules
 * Security group added to the networking module
