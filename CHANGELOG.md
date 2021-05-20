@@ -1,5 +1,9 @@
 # Tamr Azure HDInsight HBase module
 
+## v2.2.0 - May 19th 2021
+* New `address_prefixes` output variable from `hdinsight-networking` submodule
+* New `storage_container_name` output variable
+
 ## v2.1.0 - March 16th 2021
 * Change defaults for `head_node_vm_size` and `worker_node_vm_size`.  If
   upgrading and relying on default values, this will cause the

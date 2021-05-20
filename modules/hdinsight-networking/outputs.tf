@@ -12,3 +12,8 @@ output "security_group" {
   value       = azurerm_network_security_group.hdinsight-hbase-nsg
   description = "Network security group"
 }
+
+output "address_prefixes" {
+  value       = azurerm_subnet.hdinsight-subnet.address_prefixes
+  description = "Address space of subnet"
+}

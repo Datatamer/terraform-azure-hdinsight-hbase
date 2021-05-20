@@ -8,6 +8,11 @@ output "storage_container_id" {
   description = "The ID of the Storage Container"
 }
 
+output "storage_container_name" {
+  value       = module.hdinsight_hbase_storage.storage_container_name
+  description = "The name of the storage container"
+}
+
 output "hbase_cluster_id" {
   value       = module.hdinsight_cluster.hbase_cluster_id
   description = "The ID of the HDInsight HBase cluster"
