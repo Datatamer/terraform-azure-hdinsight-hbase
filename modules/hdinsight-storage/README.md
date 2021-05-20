@@ -6,7 +6,7 @@ This module creates the required storage account and container for Azure HDInsig
 
 ```
 module "hdinsight_hbase_storage" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-storage?ref=2.1.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-storage?ref=2.2.0"
   hbase_storage_account_name = "examplestorageaccount"
   resource_group_name = "example-resource-group"
   location = "example-Azure-location"
@@ -67,6 +67,7 @@ No requirements.
 | storage\_account\_name | Name of the storage account |
 | storage\_account\_primary\_access\_key | Primary access key of the storage account |
 | storage\_container\_id | ID of the azure storage container |
+| storage\_container\_name | Name of the azure storage container |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
