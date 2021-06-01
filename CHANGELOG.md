@@ -1,5 +1,8 @@
 # Tamr Azure HDInsight HBase module
 
+## v2.3.0 - June 1st 2021
+* Upgrade `azurerm` provider
+
 ## v2.2.0 - May 19th 2021
 * New `address_prefixes` output variable from `hdinsight-networking` submodule
 * New `storage_container_name` output variable
