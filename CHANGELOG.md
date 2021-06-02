@@ -1,6 +1,6 @@
 # Tamr Azure HDInsight HBase module
 
-## v2.3.0 - June 1st 2021
+## v3.0.0 - June 1st 2021
 * Upgrade `azurerm` provider
 
 ## v2.2.0 - May 19th 2021
