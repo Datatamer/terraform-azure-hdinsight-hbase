@@ -7,7 +7,7 @@ The module creates a subnet with the required service endpoints for Azure HDInsi
 
 ```
 module "service_traffic" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=2.2.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=x.y.z"
   nsg_name = "network-security-group"
   nsg_resource_group_name = "network-security-group-rg"
   ports = var.service_traffic_ports
@@ -24,13 +24,16 @@ This module creates the following resources:
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+| azurerm | >= 2.60.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | n/a |
+| azurerm | >= 2.60.0 |
 
 ## Inputs
 

@@ -3,14 +3,15 @@
 
 | Name | Version |
 |------|---------|
-| azurerm | =2.11.0 |
+| azurerm | =2.60.0 |
+| random | =3.0.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | =2.11.0 |
-| random | n/a |
+| azurerm | =2.60.0 |
+| random | =3.0.0 |
 
 ## Inputs
 

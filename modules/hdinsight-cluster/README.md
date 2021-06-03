@@ -6,7 +6,7 @@ This module creates the Azure HDInsight cluster
 
 ```
 module "hdinsight_hbase_storage" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-cluster?ref=2.1.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-cluster?ref=x.y.z"
   resource_group_name = "example-resource-group"
   location = "example-Azure-location"
   cluster_name = "hdinsight-cluster"
@@ -30,13 +30,16 @@ HDInsight has many underlying (e.g. virtual machines, networking resources). Con
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+| azurerm | >= 2.60.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| azurerm | n/a |
+| azurerm | >= 2.60.0 |
 
 ## Inputs
 
