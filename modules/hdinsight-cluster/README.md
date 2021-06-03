@@ -6,7 +6,7 @@ This module creates the Azure HDInsight cluster
 
 ```
 module "hdinsight_hbase_storage" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-cluster?ref=2.1.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-cluster?ref=x.y.z"
   resource_group_name = "example-resource-group"
   location = "example-Azure-location"
   cluster_name = "hdinsight-cluster"

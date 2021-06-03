@@ -6,7 +6,7 @@ This module creates security group rules for the passed in list of ports.
 
 ```
 module "security-rules" {
-  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-network-rules?ref=2.1.0"
+  source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-network-rules?ref=x.y.z"
   # Network Security Group
   nsg_name                = "nsg"
   nsg_resource_group_name = "nsg-rg"
