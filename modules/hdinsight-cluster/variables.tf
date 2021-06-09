@@ -101,3 +101,30 @@ variable "storage_account_primary_access_key" {
   type        = string
   description = "Primary access key of the storage account"
 }
+
+variable "scaling_days" {
+  description = "The days of the week to perform scaling operation. Full names expected (Monday, Tuesday, etc.)"
+  type        = list(string)
+  default     = []
+}
+
+variable "scaled_target_instance_counts" {
+  description = "Number of worker nodes to scale to at the chosen time. Must have same number of entries as `scaling_time` in the same order"
+  type        = list(number)
+  default     = []
+}
+
+variable "scaling_times" {
+  description = "Time at which to perform scaling operation. 24 hour hh:mm format expected. Must have same number of entries as `scaled_target_instance_count` in the same order"
+  type        = list(string)
+  default     = []
+}
+
+variable "scaling_timezone" {
+  description = <<EOF
+  Timezone in which time is defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:
+  https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/timezones-overview#list-of-supported-time-zones
+  EOF
+  type        = string
+  default     = ""
+}

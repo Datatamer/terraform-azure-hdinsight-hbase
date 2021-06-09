@@ -60,6 +60,10 @@ HDInsight has many underlying (e.g. virtual machines, networking resources). Con
 | hbase\_version | Version of hbase | `string` | `"1.1"` | no |
 | hdinsight\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D12_V2"` | no |
+| scaled\_target\_instance\_counts | Number of worker nodes to scale to at the chosen time. Must have same number of entries as `scaling_time` in the same order | `list(number)` | `[]` | no |
+| scaling\_days | The days of the week to perform scaling operation. Full names expected (Monday, Tuesday, etc.) | `list(string)` | `[]` | no |
+| scaling\_times | Time at which to perform scaling operation. 24 hour hh:mm format expected. Must have same number of entries as `scaled_target_instance_count` in the same order | `list(string)` | `[]` | no |
+| scaling\_timezone | Timezone in which time is defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:<br>  https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/timezones-overview#list-of-supported-time-zones | `string` | `""` | no |
 | tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
 | username | Username for ssh access to the instances of the cluster | `string` | `"sshuser"` | no |
 | worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D12_V2"` | no |

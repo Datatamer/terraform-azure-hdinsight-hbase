@@ -56,6 +56,10 @@ No provider.
 | private\_traffic\_priority\_offset | Starting priority of private security group rules. | `number` | `1000` | no |
 | public\_traffic\_ports | Destination ports to create network rules for. See public ports:<br>  https://docs.microsoft.com/en-us/azure/hdinsight/hdinsight-hadoop-port-settings-for-services#public-ports | `list(number)` | <pre>[<br>  22,<br>  23,<br>  443<br>]</pre> | no |
 | public\_traffic\_priority\_offset | Starting priority of public security group rules. | `number` | `2000` | no |
+| scaled\_target\_instance\_counts | Number of worker nodes to scale to at the chosen time | `list(number)` | `[]` | no |
+| scaling\_days | The days of the week to perform scaling operation. Full names expected (Monday, Tuesday, etc.) | `list(string)` | `[]` | no |
+| scaling\_times | Time at which to perform scaling operation. 24 hour hh:mm format expected. | `list(string)` | `[]` | no |
+| scaling\_timezone | Timezone in which time is defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:<br>  https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/timezones-overview#list-of-supported-time-zones | `string` | `""` | no |
 | storage\_account\_access\_tier | Access tier of the storage account. Options are Hot and Cool | `string` | `"Hot"` | no |
 | storage\_account\_kind | Account kind | `string` | `"StorageV2"` | no |
 | storage\_account\_replication\_type | Account replication type | `string` | `"ZRS"` | no |

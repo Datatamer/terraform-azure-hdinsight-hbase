@@ -69,4 +69,11 @@ module "hdinsight" {
   ]
 
   destination_address = "10.0.1.0/24"
+
+  # Autoscaling
+  # On Monday and Tuesday scale to 3 workers at 1pm, then 4 workers at 2pm
+  scaling_days                  = ["Monday", "Tuesday"]
+  scaled_target_instance_counts = [3, 4]
+  scaling_times                 = ["13:00", "14:00"]
+  scaling_timezone              = "Eastern Standard Time"
 }

@@ -5,9 +5,8 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
   name                = var.cluster_name
   resource_group_name = var.resource_group_name
   location            = var.location
-  # this specific so tf plan comes back unchanged
-  cluster_version = var.hdinsight_cluster_version
-  tier            = var.cluster_tier
+  cluster_version     = var.hdinsight_cluster_version
+  tier                = var.cluster_tier
 
   component_version {
     hbase = var.hbase_version
@@ -41,6 +40,21 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       subnet_id             = var.subnet_id
       virtual_network_id    = var.vnet_id
       target_instance_count = var.worker_count
+
+      # Schedule based auto-scaling
+      autoscale {
+        recurrence {
+          timezone = var.scaling_timezone
+          dynamic "schedule" {
+            for_each = var.scaling_times
+            content {
+              days = var.scaling_days
+              time                  = schedule.value
+              target_instance_count = var.scaled_target_instance_counts[schedule.key]
+            }
+          }
+        }
+      }
     }
 
     zookeeper_node {
@@ -51,6 +65,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
       virtual_network_id = var.vnet_id
     }
   }
+
   lifecycle {
     ignore_changes = [
       tier,   # otherwise doesn't ignore case
