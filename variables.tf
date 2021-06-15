@@ -230,19 +230,19 @@ variable "scaling_days" {
   default     = []
 }
 variable "scaled_target_instance_counts" {
-  description = "Number of worker nodes to scale to at the chosen time"
+  description = "Number of worker nodes to scale to at the chosen times. Must have same number of entries as `scaling_times` in the same order"
   type        = list(number)
   default     = []
 }
 variable "scaling_times" {
-  description = "Time at which to perform scaling operation. 24 hour hh:mm format expected."
+  description = "Times at which to perform scaling operation. 24 hour hh:mm format expected. Must have same number of entries as `scaled_target_instance_counts` in the same order"
   type        = list(string)
   default     = []
 }
 
 variable "scaling_timezone" {
   description = <<EOF
-  Timezone in which time is defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:
+  Timezone in which scaling times are defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:
   https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/timezones-overview#list-of-supported-time-zones
   EOF
   type        = string

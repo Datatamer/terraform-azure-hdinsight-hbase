@@ -48,7 +48,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
           dynamic "schedule" {
             for_each = var.scaling_times
             content {
-              days = var.scaling_days
+              days                  = var.scaling_days
               time                  = schedule.value
               target_instance_count = var.scaled_target_instance_counts[schedule.key]
             }
