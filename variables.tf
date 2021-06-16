@@ -229,15 +229,14 @@ variable "scaling_days" {
   type        = list(string)
   default     = []
 }
-variable "scaled_target_instance_counts" {
-  description = "Number of worker nodes to scale to at the chosen times. Must have same number of entries as `scaling_times` in the same order"
-  type        = list(number)
-  default     = []
-}
-variable "scaling_times" {
-  description = "Times at which to perform scaling operation. 24 hour hh:mm format expected. Must have same number of entries as `scaled_target_instance_counts` in the same order"
-  type        = list(string)
-  default     = []
+
+variable "scaling_schedule" {
+  description = <<EOF
+  Scheduled scaling operations. Expects a map of time at which to scale mapped to workers to scale to. 24 hour hh:mm format expected.
+  Example: {"15:00" : 5, "16:00" : 6}
+  EOF
+  type        = map(string)
+  default     = {}
 }
 
 variable "scaling_timezone" {

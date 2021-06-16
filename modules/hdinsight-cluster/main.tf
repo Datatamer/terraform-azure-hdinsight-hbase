@@ -46,11 +46,11 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
         recurrence {
           timezone = var.scaling_timezone
           dynamic "schedule" {
-            for_each = var.scaling_times
+            for_each = var.scaling_schedule
             content {
               days                  = var.scaling_days
-              time                  = schedule.value
-              target_instance_count = var.scaled_target_instance_counts[schedule.key]
+              time                  = schedule.key
+              target_instance_count = schedule.value
             }
           }
         }
@@ -68,9 +68,9 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
 
   lifecycle {
     ignore_changes = [
-      tier,   # otherwise doesn't ignore case
-      gateway, # so password can be removed after creation
-      autoscale, # so user can add additional scheduled scalings
+      tier,                              # otherwise doesn't ignore case
+      gateway,                           # so password can be removed after creation
+      roles[0].worker_node[0].autoscale, # so user can add additional scheduled scalings through the UI
     ]
   }
 
