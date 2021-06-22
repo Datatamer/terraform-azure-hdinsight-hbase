@@ -1,5 +1,8 @@
 # Tamr Azure HDInsight HBase module
 
+## v3.1.0 - June 22nd 2021
+* Add variables `scaling_days`, `scaling_schedule`, and `scaling_timezone` to support schedule-based scaling
+
 ## v3.0.0 - June 1st 2021
 * Upgrade `azurerm` provider
 
