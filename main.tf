@@ -53,6 +53,11 @@ module "hdinsight_cluster" {
   worker_count        = var.worker_count
   worker_node_vm_size = var.worker_node_vm_size
 
+  #Autoscaling configuration
+  scaling_days     = var.scaling_days
+  scaling_timezone = var.scaling_timezone
+  scaling_schedule = var.scaling_schedule
+
   # Metadata
   tags = var.tags
 }

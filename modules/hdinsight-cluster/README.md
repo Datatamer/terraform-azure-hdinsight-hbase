@@ -60,6 +60,9 @@ HDInsight has many underlying (e.g. virtual machines, networking resources). Con
 | hbase\_version | Version of hbase | `string` | `"1.1"` | no |
 | hdinsight\_cluster\_version | Version for HDInsight cluster | `string` | `"3.6"` | no |
 | head\_node\_vm\_size | Head node vm size | `string` | `"Standard_D12_V2"` | no |
+| scaling\_days | The days of the week to perform scaling operation. Full names expected (Monday, Tuesday, etc.) | `list(string)` | `[]` | no |
+| scaling\_schedule | Scheduled scaling operations. Expects a map of time at which to scale mapped to workers to scale to. 24 hour hh:mm format expected.<br>  Example: {"15:00" : 5, "16:00" : 6} | `map(string)` | `{}` | no |
+| scaling\_timezone | Timezone in which scaling times are defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:<br>  https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/timezones-overview#list-of-supported-time-zones | `string` | `""` | no |
 | tags | Map of tags to attach to HBase cluster and storage account | `map(string)` | `{}` | no |
 | username | Username for ssh access to the instances of the cluster | `string` | `"sshuser"` | no |
 | worker\_node\_vm\_size | Worker nodes vm size | `string` | `"Standard_D12_V2"` | no |

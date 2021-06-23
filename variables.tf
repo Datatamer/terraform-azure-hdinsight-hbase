@@ -223,3 +223,27 @@ variable "nsg_resource_group" {
   description = "Name of the resource group of the network security group"
   type        = string
 }
+
+variable "scaling_days" {
+  description = "The days of the week to perform scaling operation. Full names expected (Monday, Tuesday, etc.)"
+  type        = list(string)
+  default     = []
+}
+
+variable "scaling_schedule" {
+  description = <<EOF
+  Scheduled scaling operations. Expects a map of time at which to scale mapped to workers to scale to. 24 hour hh:mm format expected.
+  Example: {"15:00" : 5, "16:00" : 6}
+  EOF
+  type        = map(string)
+  default     = {}
+}
+
+variable "scaling_timezone" {
+  description = <<EOF
+  Timezone in which scaling times are defined. Time Zone ID expected. List of supported Azure Time Zone IDs found here:
+  https://docs.microsoft.com/en-us/azure/azure-sql/managed-instance/timezones-overview#list-of-supported-time-zones
+  EOF
+  type        = string
+  default     = ""
+}
