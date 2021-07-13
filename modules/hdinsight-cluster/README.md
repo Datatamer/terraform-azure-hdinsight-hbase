@@ -48,9 +48,10 @@ HDInsight has many underlying (e.g. virtual machines, networking resources). Con
 | cluster\_name | Name of HDInsight HBase cluster | `string` | n/a | yes |
 | gateway\_password | Gateway password | `string` | n/a | yes |
 | location | Azure region where the HDInsight HBase cluster is to be deployed | `string` | n/a | yes |
+| managed\_identity\_resource\_id | ID of the managed identity used to access the backing storage account | `string` | n/a | yes |
 | path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
-| storage\_account\_primary\_access\_key | Primary access key of the storage account | `string` | n/a | yes |
+| storage\_account\_id | ID of the storage account containing ADLS Gen2 instance | `string` | n/a | yes |
 | storage\_container\_id | ID of the azure storage container | `string` | n/a | yes |
 | subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
 | vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |

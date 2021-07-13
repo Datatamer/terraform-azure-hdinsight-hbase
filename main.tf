@@ -1,21 +1,3 @@
-module "hdinsight_hbase_storage" {
-  source                           = "./modules/hdinsight-storage"
-  hbase_storage_account_name       = var.hbase_storage_name
-  resource_group_name              = var.resource_group_name
-  location                         = var.location
-  storage_container_name           = var.storage_container_name
-  virtual_network_subnet_id        = var.subnet_id
-  enable_https_traffic_only        = var.enable_https_traffic_only
-  ip_rules                         = var.ip_rules
-  network_rules_default_action     = var.network_rules_default_action
-  storage_account_access_tier      = var.storage_account_access_tier
-  storage_account_kind             = var.storage_account_kind
-  storage_account_replication_type = var.storage_account_replication_type
-  storage_account_tier             = var.storage_account_tier
-  storage_container_access_type    = var.storage_container_access_type
-  tags                             = var.tags
-}
-
 module "hdinsight_cluster" {
   source = "./modules/hdinsight-cluster"
 
@@ -29,8 +11,9 @@ module "hdinsight_cluster" {
   hdinsight_cluster_version = var.hdinsight_cluster_version
 
   # Storage
-  storage_account_primary_access_key = module.hdinsight_hbase_storage.storage_account_primary_access_key
-  storage_container_id               = module.hdinsight_hbase_storage.storage_container_id
+  storage_container_id         = var.gen2_fs_id
+  managed_identity_resource_id = var.hbase_service_principal_id
+  storage_account_id           = var.storage_account_id
 
   # Networking
   subnet_id = var.subnet_id

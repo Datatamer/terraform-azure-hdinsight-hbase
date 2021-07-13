@@ -8,8 +8,6 @@ Refer the `/examples` directory for a complete working example.
 # Resources Created
 This modules creates:
 * HDInsight HBase cluster
-* 1 storage container
-* 1 storage account
 * n security group rules
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
@@ -31,7 +29,8 @@ No provider.
 | cluster\_name | Name of HDInsight HBase cluster | `string` | n/a | yes |
 | destination\_address | CIDR or destination IP range or \* to match any IP.<br>  Tags such as ‘VirtualNetwork’, ‘AzureLoadBalancer’ and ‘Internet’ can also be used." | `string` | n/a | yes |
 | gateway\_password | Gateway password | `string` | n/a | yes |
-| hbase\_storage\_name | Name of HBase storage account | `string` | n/a | yes |
+| gen2\_fs\_id | ID of the ADLS Gen2 container backing HBase | `string` | n/a | yes |
+| hbase\_service\_principal\_id | ID of the service principal HBases uses to access the backing storage account | `string` | n/a | yes |
 | ip\_rules | Array of IPs explicitly allowed to access UI | `list(string)` | n/a | yes |
 | location | Azure region where the HDInsight HBase cluster is to be deployed | `string` | n/a | yes |
 | nsg\_name | Name of an existing network security group to add rules to | `string` | n/a | yes |
@@ -40,7 +39,7 @@ No provider.
 | private\_traffic\_address\_prefixes | List of source address prefixes for private traffic. Tags may not be used. | `list(string)` | n/a | yes |
 | public\_traffic\_address\_prefixes | List of source address prefixes for public traffic. Tags may not be used. | `list(string)` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
-| storage\_container\_name | Name of HDInsight HBase cluster storage container | `string` | n/a | yes |
+| storage\_account\_id | ID of the storage account backing HBase | `string` | n/a | yes |
 | subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
 | vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
 | worker\_count | Desired number of worker nodes | `number` | n/a | yes |
@@ -77,11 +76,6 @@ No provider.
 | hdinsight\_cluster | All of the outputs of the HDInsight HBase cluster |
 | private\_security\_group\_rules | Security group for services traffic |
 | public\_security\_group\_rules | Security group for user traffic |
-| storage\_account\_id | The ID of the Storage Account |
-| storage\_account\_name | Name of the storage account |
-| storage\_account\_primary\_access\_key | Primary access key of the storage account |
-| storage\_container\_id | The ID of the Storage Container |
-| storage\_container\_name | The name of the storage container |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

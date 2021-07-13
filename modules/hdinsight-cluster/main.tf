@@ -13,15 +13,15 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
   }
 
   gateway {
-    enabled  = true
     username = var.gateway_username
     password = var.gateway_password
   }
 
-  storage_account {
-    storage_container_id = var.storage_container_id
-    storage_account_key  = var.storage_account_primary_access_key
-    is_default           = true
+  storage_account_gen2 {
+    is_default                   = true
+    filesystem_id                = var.storage_container_id
+    managed_identity_resource_id = var.managed_identity_resource_id
+    storage_resource_id          = var.storage_account_id
   }
 
   roles {
