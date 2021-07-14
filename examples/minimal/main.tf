@@ -2,27 +2,12 @@ resource "azurerm_resource_group" "hdinsight-rg" {
   name     = "minimal-hdinsight-cluster-example-rg"
   location = "East US 2"
 }
-//
-//resource "azurerm_virtual_network" "hdinsight-vnet" {
-//  name                = "minimal-hdinsight-cluster-example-vnet"
-//  address_space       = ["10.0.0.0/16"]
-//  location            = azurerm_resource_group.hdinsight-rg.location
-//  resource_group_name = azurerm_resource_group.hdinsight-rg.name
-//}
 
-data "azurerm_resource_group" "existing_virtual_network_resource_group" {
-  name = "tamrDevGroup"
-}
-
-data "azurerm_virtual_network" "vnet" {
-  name                = "devNetworkEast2"
-  resource_group_name = data.azurerm_resource_group.existing_virtual_network_resource_group.name
-}
-
-data "azurerm_subnet" "subnet" {
-  name                 = "internal"
-  resource_group_name  = data.azurerm_resource_group.existing_virtual_network_resource_group.name
-  virtual_network_name = data.azurerm_virtual_network.vnet.name
+resource "azurerm_virtual_network" "hdinsight-vnet" {
+  name                = "minimal-hdinsight-cluster-example-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.hdinsight-rg.location
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
 }
 
 # Azure storage account and ADLS Gen2
@@ -41,7 +26,7 @@ module "rules" {
   storage_account_name = module.adls_gen2.storage_account_name
   resource_group_name  = azurerm_resource_group.hdinsight-rg.name
   allowed_ips          = [var.your_ip]
-  allowed_subnet_ids   = [module.hdinsight_networking.subnet_id, data.azurerm_subnet.subnet.id]
+  allowed_subnet_ids   = [module.hdinsight_networking.subnet_id]
 }
 
 resource "azurerm_user_assigned_identity" "adls_gen2_identity" {
@@ -60,9 +45,9 @@ module "hdinsight_networking" {
   #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=3.1.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
-  resource_group_name = data.azurerm_resource_group.existing_virtual_network_resource_group.name
-  vnet_name           = data.azurerm_virtual_network.vnet.name
-  address_prefixes    = ["10.60.8.0/24"]
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
+  vnet_name           = azurerm_virtual_network.hdinsight-vnet.name
+  address_prefixes    = ["10.0.1.0/24"]
   location            = azurerm_resource_group.hdinsight-rg.location
   nsg_name            = "minimal-hdinsight-network-security-group"
 }
@@ -77,8 +62,8 @@ resource "random_password" "gateway_pass" {
 variable "your_ip" {
   type        = string
   description = "Your IP so that you can access the ambari portal and storage container"
-  default     = "73.238.153.146"
 }
+
 module "hdinsight" {
   #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=3.1.0"
   source = "../../"
@@ -86,7 +71,7 @@ module "hdinsight" {
   cluster_name = "minimal-hdinsight-cluster"
 
   # Scale
-  worker_count = 6
+  worker_count = 3
 
   # Resource group
   location            = azurerm_resource_group.hdinsight-rg.location
@@ -94,7 +79,7 @@ module "hdinsight" {
 
   # Subnets/VNets
   subnet_id        = module.hdinsight_networking.subnet_id
-  vnet_id          = data.azurerm_virtual_network.vnet.id
+  vnet_id          = azurerm_virtual_network.hdinsight-vnet.id
   gateway_password = random_password.gateway_pass.result
 
   # Storage
@@ -108,7 +93,7 @@ module "hdinsight" {
 
   # Security Group Rules
   nsg_name           = module.hdinsight_networking.security_group.name
-  nsg_resource_group = data.azurerm_resource_group.existing_virtual_network_resource_group.name
+  nsg_resource_group = azurerm_resource_group.hdinsight-rg.name
   private_traffic_address_prefixes = [
     "10.0.0.0/16",
   ]
@@ -117,7 +102,7 @@ module "hdinsight" {
     var.your_ip,
   ]
 
-  destination_address = "10.60.8.0/24"
+  destination_address = "10.0.1.0/24"
 
   # Autoscaling
   # On Monday and Tuesday scale to 5 workers at 3pm, then 6 workers at 4pm

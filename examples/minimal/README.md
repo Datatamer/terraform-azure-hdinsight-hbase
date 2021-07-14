@@ -17,7 +17,7 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| your\_ip | Your IP so that you can access the ambari portal and storage container | `string` | `"73.238.153.146"` | no |
+| your\_ip | Your IP so that you can access the ambari portal and storage container | `string` | n/a | yes |
 
 ## Outputs
 
