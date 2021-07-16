@@ -104,7 +104,7 @@ variable "managed_identity_resource_id" {
 
 variable "storage_container_id" {
   type        = string
-  description = "ID of the azure storage container"
+  description = "ID of the ADLS Gen2 storage container"
 }
 
 variable "scaling_days" {

@@ -24,5 +24,6 @@ output "storage_account_name" {
 }
 
 output "gen2_name" {
-  value = module.adls_gen2.gen2_fs_name
+  value       = module.adls_gen2.gen2_fs_name
+  description = "Name of ADLS Gen2 container"
 }

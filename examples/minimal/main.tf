@@ -14,7 +14,7 @@ resource "azurerm_virtual_network" "hdinsight-vnet" {
 module "adls_gen2" {
   source = "git::https://github.com/Datatamer/terraform-azure-adls-gen2.git?ref=1.0.0"
 
-  instance_name       = "tamrgen2hbase"
+  instance_name       = "tamrgen2example"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
   location            = azurerm_resource_group.hdinsight-rg.location
 }
@@ -29,20 +29,17 @@ module "rules" {
   allowed_subnet_ids   = [module.hdinsight_networking.subnet_id]
 }
 
-resource "azurerm_user_assigned_identity" "adls_gen2_identity" {
-  name                = "hbasegen2principal"
+module "hdinsight_service_principal" {
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/adls-gen2-backing-identity?ref=4.0.0"
+  source = "../../modules/adls-gen2-backing-identity"
+
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
   location            = azurerm_resource_group.hdinsight-rg.location
-}
-
-resource "azurerm_role_assignment" "blob-owner-role-assigment" {
-  scope                = module.adls_gen2.storage_account_id
-  role_definition_name = "Storage Blob Data Owner"
-  principal_id         = azurerm_user_assigned_identity.adls_gen2_identity.principal_id
+  storage_account_id  = module.adls_gen2.storage_account_id
 }
 
 module "hdinsight_networking" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=3.1.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=4.0.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -65,7 +62,7 @@ variable "your_ip" {
 }
 
 module "hdinsight" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=3.1.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=4.0.0"
   source = "../../"
 
   cluster_name = "minimal-hdinsight-cluster"
@@ -84,7 +81,7 @@ module "hdinsight" {
 
   # Storage
   gen2_fs_id                 = module.adls_gen2.gen2_fs_id
-  hbase_service_principal_id = azurerm_user_assigned_identity.adls_gen2_identity.id
+  hbase_service_principal_id = module.hdinsight_service_principal.identity_resource_id
   storage_account_id         = module.adls_gen2.storage_account_id
 
   # Creds

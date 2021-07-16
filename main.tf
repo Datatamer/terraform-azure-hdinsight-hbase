@@ -11,9 +11,9 @@ module "hdinsight_cluster" {
   hdinsight_cluster_version = var.hdinsight_cluster_version
 
   # Storage
+  storage_account_id           = var.storage_account_id
   storage_container_id         = var.gen2_fs_id
   managed_identity_resource_id = var.hbase_service_principal_id
-  storage_account_id           = var.storage_account_id
 
   # Networking
   subnet_id = var.subnet_id

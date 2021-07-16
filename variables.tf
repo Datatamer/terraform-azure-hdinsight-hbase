@@ -242,10 +242,12 @@ variable "gen2_fs_id" {
   description = "ID of the ADLS Gen2 container backing HBase"
   type        = string
 }
+
 variable "hbase_service_principal_id" {
   description = "ID of the service principal HBases uses to access the backing storage account"
   type        = string
 }
+
 variable "storage_account_id" {
   description = "ID of the storage account backing HBase"
   type        = string

@@ -52,7 +52,7 @@ HDInsight has many underlying (e.g. virtual machines, networking resources). Con
 | path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
 | storage\_account\_id | ID of the storage account containing ADLS Gen2 instance | `string` | n/a | yes |
-| storage\_container\_id | ID of the azure storage container | `string` | n/a | yes |
+| storage\_container\_id | ID of the ADLS Gen2 storage container | `string` | n/a | yes |
 | subnet\_id | ID of the subnet in which to deploy HDInsight HBase resources | `string` | n/a | yes |
 | vnet\_id | ID of the virtual network in which to deploy HBase resources | `string` | n/a | yes |
 | worker\_count | Desired number of worker nodes | `number` | n/a | yes |

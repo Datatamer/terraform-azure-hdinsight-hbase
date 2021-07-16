@@ -24,7 +24,7 @@
 | Name | Description |
 |------|-------------|
 | gateway\_password | Password for the Ambari gateway |
-| gen2\_name | n/a |
+| gen2\_name | Name of ADLS Gen2 container |
 | hbase\_cluster | The HDInsight HBase cluster |
 | hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
 | storage\_account\_name | Name of the storage account |
