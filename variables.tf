@@ -13,11 +13,6 @@ variable "cluster_name" {
   type        = string
 }
 
-variable "storage_container_name" {
-  description = "Name of HDInsight HBase cluster storage container"
-  type        = string
-}
-
 variable "ip_rules" {
   description = "Array of IPs explicitly allowed to access UI"
   type        = list(string)
@@ -93,11 +88,6 @@ variable "gateway_username" {
 
 variable "gateway_password" {
   description = "Gateway password"
-  type        = string
-}
-
-variable "hbase_storage_name" {
-  description = "Name of HBase storage account"
   type        = string
 }
 
@@ -246,4 +236,19 @@ variable "scaling_timezone" {
   EOF
   type        = string
   default     = ""
+}
+
+variable "gen2_fs_id" {
+  description = "ID of the ADLS Gen2 container backing HBase"
+  type        = string
+}
+
+variable "hbase_service_principal_id" {
+  description = "ID of the service principal HBases uses to access the backing storage account"
+  type        = string
+}
+
+variable "storage_account_id" {
+  description = "ID of the storage account backing HBase"
+  type        = string
 }

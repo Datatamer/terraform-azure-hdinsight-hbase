@@ -92,14 +92,19 @@ variable "hbase_version" {
   default     = "1.1"
 }
 
-variable "storage_container_id" {
+variable "storage_account_id" {
   type        = string
-  description = "ID of the azure storage container"
+  description = "ID of the storage account containing ADLS Gen2 instance"
 }
 
-variable "storage_account_primary_access_key" {
+variable "managed_identity_resource_id" {
   type        = string
-  description = "Primary access key of the storage account"
+  description = "ID of the managed identity used to access the backing storage account"
+}
+
+variable "storage_container_id" {
+  type        = string
+  description = "ID of the ADLS Gen2 storage container"
 }
 
 variable "scaling_days" {

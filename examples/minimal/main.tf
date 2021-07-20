@@ -10,8 +10,36 @@ resource "azurerm_virtual_network" "hdinsight-vnet" {
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 }
 
+# Azure storage account and ADLS Gen2
+module "adls_gen2" {
+  source = "git::https://github.com/Datatamer/terraform-azure-adls-gen2.git?ref=1.0.0"
+
+  instance_name       = "tamrgen2example"
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
+  location            = azurerm_resource_group.hdinsight-rg.location
+}
+
+# Network rules on ADLS Gen2 storage account
+module "rules" {
+  source = "git::https://github.com/Datatamer/terraform-azure-adls-gen2.git//modules/azure-storage-account-network-rules?ref=1.0.0"
+
+  storage_account_name = module.adls_gen2.storage_account_name
+  resource_group_name  = azurerm_resource_group.hdinsight-rg.name
+  allowed_ips          = [var.your_ip]
+  allowed_subnet_ids   = [module.hdinsight_networking.subnet_id]
+}
+
+module "hdinsight_service_principal" {
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/adls-gen2-backing-identity?ref=4.0.0"
+  source = "../../modules/adls-gen2-backing-identity"
+
+  resource_group_name = azurerm_resource_group.hdinsight-rg.name
+  location            = azurerm_resource_group.hdinsight-rg.location
+  storage_account_id  = module.adls_gen2.storage_account_id
+}
+
 module "hdinsight_networking" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=3.1.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=4.0.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -32,28 +60,31 @@ variable "your_ip" {
   type        = string
   description = "Your IP so that you can access the ambari portal and storage container"
 }
+
 module "hdinsight" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=3.1.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=4.0.0"
   source = "../../"
 
-  # names
-  cluster_name           = "minimal-hdinsight-cluster"
-  storage_container_name = "minimalstoragecontainer"
-  hbase_storage_name     = "minimalhbasestorage"
+  cluster_name = "minimal-hdinsight-cluster"
 
-  # scale
+  # Scale
   worker_count = 3
 
-  # resource group
+  # Resource group
   location            = azurerm_resource_group.hdinsight-rg.location
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
 
-  # subnets/vnets
+  # Subnets/VNets
   subnet_id        = module.hdinsight_networking.subnet_id
   vnet_id          = azurerm_virtual_network.hdinsight-vnet.id
   gateway_password = random_password.gateway_pass.result
 
-  # creds
+  # Storage
+  gen2_fs_id                 = module.adls_gen2.gen2_fs_id
+  hbase_service_principal_id = module.hdinsight_service_principal.identity_resource_id
+  storage_account_id         = module.adls_gen2.storage_account_id
+
+  # Creds
   ip_rules        = [var.your_ip]
   path_to_ssh_key = "~/.ssh/id_rsa.pub"
 

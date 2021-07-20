@@ -23,12 +23,11 @@
 
 | Name | Description |
 |------|-------------|
-| gateway\_password | Password for the ambari gateway |
+| gateway\_password | Password for the Ambari gateway |
+| gen2\_name | Name of ADLS Gen2 container |
 | hbase\_cluster | The HDInsight HBase cluster |
 | hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
-| storage\_account\_id | The ID of the Storage Account |
 | storage\_account\_name | Name of the storage account |
-| storage\_account\_primary\_access\_key | Primary access key of the storage account |
-| storage\_container\_id | The ID of the Storage Container |
+| storage\_account\_primary\_access\_key | Acess key for ADLS Gen2 storage account |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

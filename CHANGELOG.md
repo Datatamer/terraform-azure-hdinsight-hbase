@@ -1,5 +1,9 @@
 # Tamr Azure HDInsight HBase module
 
+## v4.0.0 - July 13th 2021
+* Remove storage account creation from module
+* Require ADLS Gen2 backing
+
 ## v3.1.0 - June 22nd 2021
 * Add variables `scaling_days`, `scaling_schedule`, and `scaling_timezone` to support schedule-based scaling
 
