@@ -34,8 +34,8 @@ variable "username" {
   default     = "sshuser"
 }
 
-variable "path_to_ssh_key" {
-  description = "Path to the SSH key"
+variable "ssh_public_key" {
+  description = "SSH public key data"
   type        = string
 }
 
