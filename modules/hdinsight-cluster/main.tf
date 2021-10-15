@@ -60,7 +60,7 @@ resource "azurerm_hdinsight_hbase_cluster" "hdinsight_hbase_cluster" {
     zookeeper_node {
       vm_size            = var.zk_node_vm_size
       username           = var.username
-      ssh_keys           = [file(var.path_to_ssh_key)]
+      ssh_keys           = [var.ssh_public_key]
       subnet_id          = var.subnet_id
       virtual_network_id = var.vnet_id
     }
