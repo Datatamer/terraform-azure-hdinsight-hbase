@@ -21,7 +21,7 @@ module "hdinsight_cluster" {
 
   # SSH Access
   username        = var.username
-  path_to_ssh_key = var.path_to_ssh_key
+  ssh_public_key = var.ssh_public_key
 
   # Portal Access
   gateway_username = var.gateway_username
