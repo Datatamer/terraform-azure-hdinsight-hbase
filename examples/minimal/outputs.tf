@@ -27,3 +27,8 @@ output "gen2_name" {
   value       = module.adls_gen2.gen2_fs_name
   description = "Name of ADLS Gen2 container"
 }
+
+output "private_key" {
+  value     = tls_private_key.azure_ssh.private_key_pem
+  sensitive = true
+}

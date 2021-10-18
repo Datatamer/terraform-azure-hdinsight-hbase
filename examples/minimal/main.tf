@@ -1,3 +1,9 @@
+# Create ssh key
+resource "tls_private_key" "azure_ssh" {
+  algorithm = "RSA"
+  rsa_bits = 4096
+}
+
 resource "azurerm_resource_group" "hdinsight-rg" {
   name     = "minimal-hdinsight-cluster-example-rg"
   location = "East US 2"
@@ -86,7 +92,7 @@ module "hdinsight" {
 
   # Creds
   ip_rules        = [var.your_ip]
-  path_to_ssh_key = "~/.ssh/id_rsa.pub"
+  ssh_public_key = tls_private_key.azure_ssh.public_key_openssh
 
   # Security Group Rules
   nsg_name           = module.hdinsight_networking.security_group.name

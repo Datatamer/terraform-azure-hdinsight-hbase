@@ -29,5 +29,6 @@
 | hbase\_cluster\_id | The ID of the HDInsight HBase cluster |
 | storage\_account\_name | Name of the storage account |
 | storage\_account\_primary\_access\_key | Acess key for ADLS Gen2 storage account |
+| private_key | Private key to ssh into HDInsight Hbase cluster |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

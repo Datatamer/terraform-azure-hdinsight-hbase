@@ -35,7 +35,7 @@ No provider.
 | location | Azure region where the HDInsight HBase cluster is to be deployed | `string` | n/a | yes |
 | nsg\_name | Name of an existing network security group to add rules to | `string` | n/a | yes |
 | nsg\_resource\_group | Name of the resource group of the network security group | `string` | n/a | yes |
-| path\_to\_ssh\_key | Path to the SSH key | `string` | n/a | yes |
+| ssh\_public\_key | SSH public key data | `string` | n/a | yes |
 | private\_traffic\_address\_prefixes | List of source address prefixes for private traffic. Tags may not be used. | `list(string)` | n/a | yes |
 | public\_traffic\_address\_prefixes | List of source address prefixes for public traffic. Tags may not be used. | `list(string)` | n/a | yes |
 | resource\_group\_name | Name of resource group | `string` | n/a | yes |
