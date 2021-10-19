@@ -1,5 +1,8 @@
 # Tamr Azure HDInsight HBase module
 
+## v5.0.0 - October 19th 2021
+* Replace variable `path_to_ssh_key` with `ssh_public_key` to switch from using local path to ssh key file to using ssh public key data
+
 ## v4.0.0 - July 13th 2021
 * Remove storage account creation from module
 * Require ADLS Gen2 backing

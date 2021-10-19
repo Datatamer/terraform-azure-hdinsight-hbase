@@ -36,7 +36,7 @@ module "rules" {
 }
 
 module "hdinsight_service_principal" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/adls-gen2-backing-identity?ref=4.0.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/adls-gen2-backing-identity?ref=5.0.0"
   source = "../../modules/adls-gen2-backing-identity"
 
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -45,7 +45,7 @@ module "hdinsight_service_principal" {
 }
 
 module "hdinsight_networking" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=4.0.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=5.0.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -68,7 +68,7 @@ variable "your_ip" {
 }
 
 module "hdinsight" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=4.0.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=5.0.0"
   source = "../../"
 
   cluster_name = "minimal-hdinsight-cluster"
