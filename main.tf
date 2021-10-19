@@ -20,7 +20,7 @@ module "hdinsight_cluster" {
   vnet_id   = var.vnet_id
 
   # SSH Access
-  username        = var.username
+  username       = var.username
   ssh_public_key = var.ssh_public_key
 
   # Portal Access

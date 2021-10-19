@@ -1,7 +1,7 @@
 # Create ssh key
 resource "tls_private_key" "azure_ssh" {
   algorithm = "RSA"
-  rsa_bits = 4096
+  rsa_bits  = 4096
 }
 
 resource "azurerm_resource_group" "hdinsight-rg" {
@@ -91,7 +91,7 @@ module "hdinsight" {
   storage_account_id         = module.adls_gen2.storage_account_id
 
   # Creds
-  ip_rules        = [var.your_ip]
+  ip_rules       = [var.your_ip]
   ssh_public_key = tls_private_key.azure_ssh.public_key_openssh
 
   # Security Group Rules
