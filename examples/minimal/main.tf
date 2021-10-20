@@ -1,3 +1,9 @@
+# Create ssh key
+resource "tls_private_key" "azure_ssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "azurerm_resource_group" "hdinsight-rg" {
   name     = "minimal-hdinsight-cluster-example-rg"
   location = "East US 2"
@@ -30,7 +36,7 @@ module "rules" {
 }
 
 module "hdinsight_service_principal" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/adls-gen2-backing-identity?ref=4.0.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/adls-gen2-backing-identity?ref=5.0.0"
   source = "../../modules/adls-gen2-backing-identity"
 
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -39,7 +45,7 @@ module "hdinsight_service_principal" {
 }
 
 module "hdinsight_networking" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=4.0.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git//modules/hdinsight-networking?ref=5.0.0"
   source              = "../../modules/hdinsight-networking"
   subnet_name         = "minimal-hdinsight-cluster-example-subnet"
   resource_group_name = azurerm_resource_group.hdinsight-rg.name
@@ -62,7 +68,7 @@ variable "your_ip" {
 }
 
 module "hdinsight" {
-  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=4.0.0"
+  #source = "git::https://github.com/Datatamer/terraform-azure-hdinsight-hbase.git?ref=5.0.0"
   source = "../../"
 
   cluster_name = "minimal-hdinsight-cluster"
@@ -85,8 +91,8 @@ module "hdinsight" {
   storage_account_id         = module.adls_gen2.storage_account_id
 
   # Creds
-  ip_rules        = [var.your_ip]
-  path_to_ssh_key = "~/.ssh/id_rsa.pub"
+  ip_rules       = [var.your_ip]
+  ssh_public_key = tls_private_key.azure_ssh.public_key_openssh
 
   # Security Group Rules
   nsg_name           = module.hdinsight_networking.security_group.name
